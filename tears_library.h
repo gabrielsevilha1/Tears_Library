@@ -33,9 +33,10 @@ public:
 	void setViewSize(int w, int h);
 	void setFullscreen(bool fullscreen);
 	void setVsync(bool enable);
-	void setIcon(const char* file);
 	void setTitle(const char* title);
 	void setIcon(const char* icon_file);
+	void setSmallIconSize(int w, int h);
+	void setBigIconSize(int w, int h);
 	
 	int width,height;
 	int view_width,view_height;
@@ -62,6 +63,10 @@ private:
 	double current_tick = GetTickCount();
 	double last_tick = current_tick;
 	double frame_time = current_tick - last_tick;
+	
+	char icon_file[256] = {};
+	double big_icon_w = 64, big_icon_h = 64;
+	double small_icon_w = 32, small_icon_h = 32;
 	
 	bool vsync = false;
 	
@@ -147,14 +152,35 @@ void Display::setFullscreen(bool fullscreen){
 void Display::setVsync(bool enable){
 	vsync = enable;
 }
-void Display::setIcon(const char* file){
-	
-}
 void Display::setTitle(const char* title){
 	SetWindowTextA(hwnd,title);
 }
-void Display::setIcon(const char* icon_file){
-	
+void Display::setIcon(const char* file){
+	strcpy(icon_file,file);
+	HICON hicon_big = (HICON)LoadImage(NULL,file,IMAGE_ICON,big_icon_w,big_icon_h,LR_LOADFROMFILE);
+	HICON hicon_small = (HICON)LoadImage(NULL,file,IMAGE_ICON,small_icon_w,small_icon_h,LR_LOADFROMFILE);
+	SendMessage(hwnd, WM_SETICON, ICON_BIG,(LPARAM)hicon_big);
+	SendMessage(hwnd, WM_SETICON, ICON_SMALL,(LPARAM)hicon_small);
+}
+void Display::setBigIconSize(int w, int h){
+	if(icon_file[0] != '\0'){
+		this->big_icon_w = w;
+		this->big_icon_h = h;
+		HICON hicon_big = (HICON)LoadImage(NULL,icon_file,IMAGE_ICON,big_icon_w,big_icon_h,LR_LOADFROMFILE);
+		SendMessage(hwnd, WM_SETICON, ICON_BIG,(LPARAM)hicon_big);
+	}else{
+		printf("Tears Library: Use setIcon(const char* file) mathod before call setBigIconSize\n");
+	}
+}
+void Display::setSmallIconSize(int w, int h){
+	if(icon_file[0] != '\0'){
+		this->small_icon_w = w;
+		this->small_icon_h = h;
+		HICON hicon_small = (HICON)LoadImage(NULL,icon_file,IMAGE_ICON,small_icon_w,small_icon_h,LR_LOADFROMFILE);
+		SendMessage(hwnd, WM_SETICON, ICON_SMALL,(LPARAM)hicon_small);
+	}else{
+		printf("Tears Library: Use setIcon(const char* file) mathod before call setSmallIconSize\n");
+	}
 }
 void Display::shutdown(){
 	EndPaint(hwnd,&tl_paintstruct);
