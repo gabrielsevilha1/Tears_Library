@@ -1,0 +1,48 @@
+TearsLibrary
+Created by: Gabriel Sevilha
+
+Project init: 06/15/2020
+Project first release: 16/06/2020
+
+TearsLibrary is a graphics library write in C/C++ to help write applications without worrying with a low level api, so you can dedicate for your project development accelerating you development
+
+TearsLibrary References:
+
+	Compile links:
+	
+		-lgdi32 -lgdiplus
+
+	Classes:
+	
+		Display:
+			Display(const char* title,int width,int height,bool fullscreen,bool vsync);
+			void show();
+			void shutdown();
+		
+		Image:
+			Image(const char* file);
+			draw();
+			setPosition(int x, int y);
+			setSize(int w, int h);
+
+	Functions:
+	
+		void setColor(int r, int g, int b);
+		void setPenSize(int size);
+		void fillRect(int x, int y, int w, int h);
+		void fillEllipse(int x, int y, int r);
+		void drawPixel(int x, int y);
+		void drawRect(int x, int y, int w, int h);
+		void drawEllipse(int x, int y, int r);
+		void drawLine(int x, int y, int final_x, int final_y);
+
+Program exemple:
+
+	Draw polygon:
+	
+		int point[] = {
+			400,100,
+			100,500,
+			700,500
+		};
+		fillPolygon(point,3);
