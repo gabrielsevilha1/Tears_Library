@@ -1,51 +1,286 @@
-TearsLibrary
+Tears Library
 Created by: Gabriel Sevilha
 
 Project init: 06/15/2020
-Project first release: 16/06/2020
+Project first release: 06/24/2020
 
-TearsLibrary is a graphics library write in C/C++ to help write applications without worrying with a low level api, so you can dedicate for your project development accelerating you development
+	Tears Library is a graphics library write in C/C++ to help write applications
+without worrying with a low level api, so you can dedicate for your project
+development accelerating you development.
+Unfortulately, Tears library still haven't hardware aceleration
 
 Obs:
-	Never call display functions in loop
+	Do not use functions or variables of Tears that not listed here.
+	Never call display functions in any type of loop.
 
 TearsLibrary References:
 
 	Compile links:
 	
 		-lgdi32 -lgdiplus
+		
+	Global variables:
+	
+		int fps;
+		
+		//Key input:
+		bool key_*;
+		//Exemple of key_...:
+			key_a , key_b , key_c (and others alphabet characters (-ç) )
+			key_0 , key_1 , key_2 (and others numeric characters)
+			key_escape , key_space , key_ctrl , key_shift , key_right (and others)
+			
+		//Mouse input:
+		bool mb_left = 0, mb_right = 0, mb_middle = 0;
+		
+		POINT mouse_position;      (has x and y)
+		POINT mouse_position_view; (has x and y)
+		
+	Definitions:
+		
+		//Is format parameter of setFont()
+		REGULAR 0
+		BOLD 1
+		ITALIC 2
 
 	Classes:
 	
 		Display:
-			Display(const char* title,int width,int height,bool fullscreen,bool vsync);
+		
+			Display(const char* title,int width,int height);
 			void show();
 			void shutdown();
-		
+			void setSize(int w, int h);
+			void setViewSize(int w, int h);
+			void setFullscreen(bool fullscreen);
+			void setVsync(bool enable);
+			void setTitle(const char* title);
+			void setIcon(const char* file);
+			void setSmallIconSize(int w, int h);
+			void setBigIconSize(int w, int h);
+			void setResizable(bool enable);
+			void setCursor(const char* file);
+			void showCursor(bool enable);
+			void setFixedViewScale(bool enable);
+			void setBorderless(bool enable);
+			
+			int width,height;
+			int view_width,view_height;
+			
+			HWND hwnd;
+			
 		Image:
+		
 			Image(const char* file);
-			draw();
-			setPosition(int x, int y);
-			setSize(int w, int h);
+			void setPosition(int x, int y);
+			void setScale(int x, int y);
+			void setCropPosition(int crop_x, int crop_y);
+			void setCropSize(int crop_w, int crop_h);
+			void setOrigin(int x, int y);
+			void setAlpha(int a);
+			void setColor(int r, int g, int b);
+			void draw();
+			
+			bool cached = false; //(Use with wisdom (Tears unfortunately is not have a hardware acelerate) )
+			
+			float x = 0, y = 0, w = 0, h = 0, scale_x = 1, scale_y = 1, a = 0;
+			float crop_x = 0, crop_y = 0, crop_w = 0, crop_h = 0;
+			int origin_x = 0, origin_y = 0;
 
 	Functions:
-	
+		
+		//(All depends of Display class)
+		
+		double getTicks();
+		void setFont(const char* font, int size, int format);
+		void resetMatrix();
+		void translate(float x, float y);
+		void rotate(float a);
+		void scale(float x, float y);
+		void drawText(const char* text,int x, int y);
 		void setColor(int r, int g, int b);
 		void setPenSize(int size);
 		void fillRect(int x, int y, int w, int h);
 		void fillEllipse(int x, int y, int r);
+		void fillPolygon(int point[], int points_count);
 		void drawPixel(int x, int y);
 		void drawRect(int x, int y, int w, int h);
 		void drawEllipse(int x, int y, int r);
 		void drawLine(int x, int y, int final_x, int final_y);
+		void drawPolygon(int point[], int points_count);
 
 Program exemple:
 
-	Draw polygon:
+//Create and configure window========================================================================
+
+
+//Include Tears Library in your project
+#include"tears_library.h"
+
+int main(){
 	
+	//Create display
+	Display d("Tears",800,600);
+	
+	//Set window resizable
+	d.setResizable(true);
+	
+	//Set window size
+	d.setSize(800,600);
+	
+	//Set window fullscreen
+	d.setFullscreen(true);
+	
+	//Set window borderless
+	d.setBorderless(true);
+	
+	//Set cursor images
+	d.setCursor("cusor.ico");
+	
+	//Set window icon image
+	d.setIcon("icon.ico");
+	
+	//Set small window icon size
+	d.setSmallIconSize(32,32);
+	
+	//Set big window icon size
+	d.setBigIconSize(128,128);
+	
+	//Enable vsync (fix fps in 60)
+	d.setVsync(true);
+	
+	//Set window title
+	d.setTitle("title");
+	
+	//Set view size (this is one of a main features of Tears Library :) )
+	d.setViewSize(800,600);
+	
+	//this will make resolution not changes if a window is resizable (this is one of a main features of Tears Library :) )
+	d.setFixedViewScale(true);
+	
+	//Show or hide cursor
+	d.showCursor(true);
+	
+	while(true){
+		
+		//Update window and swap buffers (Need aways call this method)
+		d.show();
+		
+	}
+	
+	//Close display
+	d.shutdown();
+	
+}
+
+//Use image==========================================================================================
+
+#include"tears_library.h"
+
+int main(){
+	
+	Display d("Tears",800,600);
+	
+	//Instantiate a image
+	Image i("Girl.png");
+	
+	//Set image position
+	i.setPosition(d.width/2-i.w/2,d.height/2-i.h/2);
+	
+	//Set origin point of image
+	i.setOrigin(i.w/2,i.h/2);
+	
+	//Set scale of image
+	i.setScale(8,8);
+	
+	//Set alpha of image
+	i.setAlpha(255);
+	
+	//Set color of image
+	i.setColor(255,255,255);
+	
+	//Set crop position
+	i.setCropPosition(0,0);
+	
+	//Set crop size
+	i.setCropSize(32,32);
+	
+	while(true){
+		
+		//Draw image
+		i.draw();
+		
+		d.show();
+		
+	}
+	
+}
+
+//Drawing============================================================================================
+
+#include"tears_library.h"
+
+int main(){
+	
+	Display d("Tears",800,600);
+	
+	while(true){
+		
+		//Set color of your nexts draws;
+		setColor(0,0,255);
+		
+		//Fill rectangle in position 100,100 with size of 50,50
+		fillRect(100,100,50,50);
+		
+		//Set pen line size
+		setPenSize(4);
+		
+		//Draw rectangle in position 100,100 with size of 50,50
+		drawRect(20,20,760,560);
+		
+		//Draw a single pixel
+		drawPixel(10,10);
+		
+		//Polygon
+		//Specify a vertex array, with x, and y
 		int point[] = {
+		//	 x   y
 			400,100,
 			100,500,
 			700,500
 		};
 		fillPolygon(point,3);
+		
+		d.show();
+		
+	}
+	
+}
+
+//Text===============================================================================================
+
+#include"tears_library.h"
+
+int main(){
+	
+	Display d("Tears",800,600);
+	
+	while(true){
+		
+		//Setting font
+		//Formats:
+		//	REGULAR
+		//	BOLD
+		//	ITALIC
+		setFont("Arial", 86, REGULAR);
+		
+		//Draw text in screen
+		drawText("Hello world!",0,0);
+		
+		d.show();
+		
+	}
+	
+}
+
+//Cry ;-;
