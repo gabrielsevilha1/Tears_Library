@@ -6,6 +6,9 @@ Project first release: 16/06/2020
 
 TearsLibrary is a graphics library write in C/C++ to help write applications without worrying with a low level api, so you can dedicate for your project development accelerating you development
 
+Obs:
+	Never call display functions in loop
+
 TearsLibrary References:
 
 	Compile links:

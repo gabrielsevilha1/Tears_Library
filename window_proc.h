@@ -1,6 +1,8 @@
 #ifndef WINDOW_PROC_H
 #define WINDOW_PROC_H
 
+bool tl_window_sized = false;
+
 bool key_w = 0,key_d = 0,key_a = 0,key_s = 0,key_shift = 0,key_ctrl = 0,key_e = 0,key_q = 0,key_space = 0,key_escape = 0,key_up = 0,key_down = 0,key_right = 0,key_left = 0,key_1 = 0,key_2 = 0,key_3 = 0,key_4 = 0,key_5 = 0,key_6 = 0,key_7 = 0,key_8 = 0,key_9 = 0,key_0 = 0,key_r = 0,key_f = 0,key_z = 0,key_x = 0,key_c = 0,key_v = 0,key_b = 0,key_n = 0,key_m = 0,key_t = 0,key_g = 0,key_y = 0,key_h = 0,key_u = 0,key_j = 0,key_i = 0,key_k = 0,key_o = 0,key_l = 0,key_p = 0,key_tab = 0,key_enter = 0;
 bool mb_left = 0, mb_right = 0, mb_middle = 0;
 
@@ -12,6 +14,9 @@ LRESULT CALLBACK WindowProc(HWND hwnd,UINT msg,WPARAM wparam,LPARAM lparam){
 	switch(msg){
 		case WM_CLOSE:
 			PostQuitMessage(0);
+		break;
+		case WM_SIZE:
+			tl_window_sized = true;
 		break;
 		case WM_KEYDOWN:
 			if(wparam == 'Q')
@@ -226,6 +231,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd,UINT msg,WPARAM wparam,LPARAM lparam){
 		case WM_MBUTTONUP:
 			mb_middle = false;
 		break;
+		
 	}
 	
 	GetCursorPos(&mouse_position);

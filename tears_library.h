@@ -18,6 +18,9 @@ Gdiplus::Pen* tl_pen;
 Gdiplus::Font* tl_font;
 Gdiplus::FontFamily* tl_font_type;
 
+#define WINDOW_BORDER_X 6
+#define WINDOW_BORDER_Y 28
+
 static int fps = 0;
 
 class Display{
@@ -34,9 +37,14 @@ public:
 	void setFullscreen(bool fullscreen);
 	void setVsync(bool enable);
 	void setTitle(const char* title);
-	void setIcon(const char* icon_file);
+	void setIcon(const char* file);
 	void setSmallIconSize(int w, int h);
 	void setBigIconSize(int w, int h);
+	void setResizable(bool enable);
+	void setCursor(const char* file);
+	void showCursor(bool enable);
+	void setFixedViewScale(bool enable);
+	void setBorderless(bool enable);
 	
 	int width,height;
 	int view_width,view_height;
@@ -45,8 +53,8 @@ public:
 
 private:
 
-	int WINDOW_RESOLUTION_X = GetSystemMetrics(SM_CXSCREEN);
-	int WINDOW_RESOLUTION_Y = GetSystemMetrics(SM_CYSCREEN);
+	int DESKTOP_RESOLUTION_X = GetSystemMetrics(SM_CXSCREEN);
+	int DESKTOP_RESOLUTION_Y = GetSystemMetrics(SM_CYSCREEN);
 
 	Gdiplus::GdiplusStartupInput gdiplusstartupinput;
 	ULONG_PTR gdiplustoken;
@@ -64,11 +72,15 @@ private:
 	double last_tick = current_tick;
 	double frame_time = current_tick - last_tick;
 	
-	char icon_file[256] = {};
+	char icon_file[128] = {};
 	double big_icon_w = 64, big_icon_h = 64;
 	double small_icon_w = 32, small_icon_h = 32;
 	
+	bool resizable = false;
+	bool borderless = false;
+	bool fullscreen = false;
 	bool vsync = false;
+	bool fixed_view_scale = false;
 	
 };
 Display::Display(const char* title,int width,int height){
@@ -84,12 +96,11 @@ Display::Display(const char* title,int width,int height){
 	wc.lpfnWndProc = WindowProc;
 	wc.lpszClassName = "_TEARS_LIBRARY";
 	wc.hCursor = LoadCursor(NULL,IDC_ARROW);
-	wc.hbrBackground = (HBRUSH)(COLOR_WINDOW+1);
 	wc.hIcon = LoadIcon(NULL,IDI_APPLICATION);
 	RegisterClass(&wc);
 	
 	hwnd = CreateWindowEx(0,"_TEARS_LIBRARY",title,WS_OVERLAPPED|WS_MINIMIZEBOX|WS_SYSMENU,
-	GetSystemMetrics(SM_CXSCREEN)/2-width/2,GetSystemMetrics(SM_CYSCREEN)/2-height/2,width+6,height+28,
+	GetSystemMetrics(SM_CXSCREEN)/2-width/2,GetSystemMetrics(SM_CYSCREEN)/2-height/2,width+WINDOW_BORDER_X,height+WINDOW_BORDER_Y,
 	0,0,GetModuleHandle(0),0);
 	ShowWindow(hwnd,SW_SHOW);
 	
@@ -116,9 +127,7 @@ Display::~Display(){
 void Display::setSize(int w, int h){
 	this->width = w;
 	this->height = h;
-	this->view_width = w;
-	this->view_height = h;
-	SetWindowPos(hwnd,HWND_TOP,GetSystemMetrics(SM_CXSCREEN)/2-w/2,GetSystemMetrics(SM_CYSCREEN)/2-h/2,w+6,h+28,SWP_SHOWWINDOW);
+	SetWindowPos(hwnd,HWND_TOP,GetSystemMetrics(SM_CXSCREEN)/2-w/2,GetSystemMetrics(SM_CYSCREEN)/2-h/2,w+WINDOW_BORDER_X,h+WINDOW_BORDER_Y,SWP_SHOWWINDOW);
 	tl_hbitmap = CreateCompatibleBitmap(tl_hdc,width,height);
 	SelectObject(tl_hdcbuffer,tl_hbitmap);
 	tl_graphics = new Gdiplus::Graphics(tl_hdcbuffer);
@@ -128,6 +137,7 @@ void Display::setViewSize(int w, int h){
 	this->view_height = h;
 }
 void Display::setFullscreen(bool fullscreen){
+	this->fullscreen = fullscreen;
 	DEVMODE	dv_settings;
 	EnumDisplaySettings(NULL, 0, &dv_settings);
 	dv_settings.dmBitsPerPel = 32;
@@ -140,14 +150,13 @@ void Display::setFullscreen(bool fullscreen){
 		SetWindowPos(hwnd,HWND_TOPMOST,0,0,width,height,SWP_FRAMECHANGED);
 		ShowWindow(hwnd, SW_MAXIMIZE);
 	}else{
-		dv_settings.dmPelsWidth = WINDOW_RESOLUTION_X;
-		dv_settings.dmPelsHeight = WINDOW_RESOLUTION_Y;
+		dv_settings.dmPelsWidth = DESKTOP_RESOLUTION_X;
+		dv_settings.dmPelsHeight = DESKTOP_RESOLUTION_Y;
 		ChangeDisplaySettings(&dv_settings,0);
-		SetWindowLong(hwnd,GWL_STYLE,WS_OVERLAPPED|WS_CAPTION|WS_SYSMENU|WS_THICKFRAME|WS_MINIMIZEBOX);
-		SetWindowPos(hwnd,HWND_TOPMOST,GetSystemMetrics(SM_CXSCREEN)/2-width/2,GetSystemMetrics(SM_CYSCREEN)/2-height/2,width,height,SWP_FRAMECHANGED);
+		SetWindowLong(hwnd,GWL_STYLE,WS_OVERLAPPED|WS_CAPTION|WS_SYSMENU|WS_MINIMIZEBOX);
+		SetWindowPos(hwnd,HWND_TOP,GetSystemMetrics(SM_CXSCREEN)/2-width/2,GetSystemMetrics(SM_CYSCREEN)/2-height/2,width+WINDOW_BORDER_X,height+WINDOW_BORDER_Y,SWP_FRAMECHANGED);
 		ShowWindow(hwnd,SW_SHOWNORMAL);
 	}
-	
 }
 void Display::setVsync(bool enable){
 	vsync = enable;
@@ -169,7 +178,7 @@ void Display::setBigIconSize(int w, int h){
 		HICON hicon_big = (HICON)LoadImage(NULL,icon_file,IMAGE_ICON,big_icon_w,big_icon_h,LR_LOADFROMFILE);
 		SendMessage(hwnd, WM_SETICON, ICON_BIG,(LPARAM)hicon_big);
 	}else{
-		printf("Tears Library: Use setIcon(const char* file) mathod before call setBigIconSize\n");
+		printf("Tears Library: Use setIcon(const char* file) method before call setBigIconSize(int w, int h)\n");
 	}
 }
 void Display::setSmallIconSize(int w, int h){
@@ -179,7 +188,48 @@ void Display::setSmallIconSize(int w, int h){
 		HICON hicon_small = (HICON)LoadImage(NULL,icon_file,IMAGE_ICON,small_icon_w,small_icon_h,LR_LOADFROMFILE);
 		SendMessage(hwnd, WM_SETICON, ICON_SMALL,(LPARAM)hicon_small);
 	}else{
-		printf("Tears Library: Use setIcon(const char* file) mathod before call setSmallIconSize\n");
+		printf("Tears Library: Use setIcon(const char* file) method before call setSmallIconSize(int w, int h)\n");
+	}
+}
+void Display::setResizable(bool enable){
+	if(!fullscreen){
+		if(enable){
+			SetWindowLong(hwnd,GWL_STYLE,WS_OVERLAPPED|WS_MAXIMIZEBOX|WS_CAPTION|WS_SYSMENU|WS_THICKFRAME|WS_MINIMIZEBOX);
+			ShowWindow(hwnd,SW_SHOW);
+		}else{
+			SetWindowLong(hwnd,GWL_STYLE,WS_OVERLAPPED|WS_CAPTION|WS_SYSMENU|WS_MINIMIZEBOX);
+			ShowWindow(hwnd,SW_SHOW);
+		}
+		resizable = enable;
+	}else{
+		printf("Tears Library: You only can use setResizable(bool enable) method if you window is windowed\n");
+	}
+}
+void Display::setBorderless(bool enable){
+	this->borderless = enable;
+	if(enable){
+		SetWindowLong(hwnd,GWL_STYLE,WS_OVERLAPPED);
+		SetWindowPos(hwnd,HWND_TOP,GetSystemMetrics(SM_CXSCREEN)/2-width/2,GetSystemMetrics(SM_CYSCREEN)/2-height/2,width,height,SWP_SHOWWINDOW);
+		ShowWindow(hwnd,SW_SHOW);
+	}else{
+		SetWindowLong(hwnd,GWL_STYLE,WS_OVERLAPPED|WS_MINIMIZEBOX|WS_CAPTION|WS_SYSMENU);
+		SetWindowPos(hwnd,HWND_TOP,GetSystemMetrics(SM_CXSCREEN)/2-width/2,GetSystemMetrics(SM_CYSCREEN)/2-height/2,width+WINDOW_BORDER_X,height+WINDOW_BORDER_Y,SWP_SHOWWINDOW);
+		ShowWindow(hwnd,SW_SHOW);
+	}
+}
+void Display::setFixedViewScale(bool enable){
+	fixed_view_scale = enable;
+}
+void Display::showCursor(bool enable){
+	ShowCursor(enable);
+}
+void Display::setCursor(const char* file){
+	int len = strlen(file);
+	if(file[len-1] == 'o' && file[len-2] == 'c' && file[len-3] == 'i'){
+		HCURSOR hcursor = (HCURSOR)LoadImage(NULL,file,IMAGE_ICON,32,32,LR_LOADFROMFILE);
+		SetClassLong(hwnd,GCL_HCURSOR,(LONG)hcursor);
+	}else{
+		printf("Tears Library: you can not use this image file for cursor (try .ico)\n");
 	}
 }
 void Display::shutdown(){
@@ -196,6 +246,22 @@ void Display::show(){
 		DispatchMessage(&msg);
 		mouse_position_view.x = (((float)(mouse_position.x)/width)*view_width);
 		mouse_position_view.y = (((float)(mouse_position.y)/height)*view_height);
+		if(tl_window_sized){
+			RECT rect;
+			GetClientRect(hwnd,&rect);
+			this->width = rect.right;
+			this->height = rect.bottom;
+			if(!fixed_view_scale && resizable){
+				this->view_width = rect.right;
+				this->view_height = rect.bottom;
+				tl_hbitmap = CreateCompatibleBitmap(tl_hdc,width,height);
+			}else{
+				tl_hbitmap = CreateCompatibleBitmap(tl_hdc,view_width,view_height);
+			}
+			SelectObject(tl_hdcbuffer,tl_hbitmap);
+			tl_graphics = new Gdiplus::Graphics(tl_hdcbuffer);
+			tl_window_sized = false;
+		}
 	}
 	if(msg.message == WM_QUIT){
 		exit(0);
@@ -204,9 +270,8 @@ void Display::show(){
 	fps_conter++;
 	current_time = time(0);
 	if(current_time - last_time > 0){
-		//This is bad, i know
 		fps = fps_conter;
-		if(vsync && fps > 60)
+		if(vsync && fps > 60 && fps < 70)
 			fps = 60;
 		last_time = current_time;
 		fps_conter = 0;
@@ -263,6 +328,9 @@ Image::Image(const char* file){
 	wchar_t wchar_file[char_size];
 	mbstowcs(wchar_file,file,char_size);
 	img = new Gdiplus::Image(wchar_file,PixelFormat24bppRGB);
+	if(img->GetLastStatus() != Gdiplus::Ok){
+		printf("Tears Library: Can not load image: %s\n",file);
+		exit(0);}
 	Gdiplus::Bitmap img_bitmap(wchar_file);
 	cached_bitmap = new Gdiplus::CachedBitmap(&img_bitmap,tl_graphics);
 	image_attribute.SetColorMatrix(&color_matrix,Gdiplus::ColorMatrixFlagsDefault,Gdiplus::ColorAdjustTypeBitmap);
@@ -343,9 +411,8 @@ void setFont(const char* font, int size, int format){
 		break;
 	}
 }
-
-void showCursor(bool enable){
-	ShowCursor(enable);
+double getTicks(){
+	return GetTickCount();
 }
 void resetMatrix(){
 	tl_graphics->ResetTransform();
