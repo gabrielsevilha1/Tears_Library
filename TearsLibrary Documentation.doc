@@ -31,7 +31,7 @@ TearsLibrary References:
 			key_escape , key_space , key_ctrl , key_shift , key_right (and others)
 			
 		//Mouse input:
-		bool mb_left = 0, mb_right = 0, mb_middle = 0;
+		bool left_click = 0, right_click = 0, middle_click = 0;
 		
 		POINT mouse_position;      (has x and y)
 		POINT mouse_position_view; (has x and y)

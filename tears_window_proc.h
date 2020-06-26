@@ -4,7 +4,7 @@
 bool tl_window_sized = false;
 
 bool key_w = 0,key_d = 0,key_a = 0,key_s = 0,key_shift = 0,key_ctrl = 0,key_e = 0,key_q = 0,key_space = 0,key_escape = 0,key_up = 0,key_down = 0,key_right = 0,key_left = 0,key_1 = 0,key_2 = 0,key_3 = 0,key_4 = 0,key_5 = 0,key_6 = 0,key_7 = 0,key_8 = 0,key_9 = 0,key_0 = 0,key_r = 0,key_f = 0,key_z = 0,key_x = 0,key_c = 0,key_v = 0,key_b = 0,key_n = 0,key_m = 0,key_t = 0,key_g = 0,key_y = 0,key_h = 0,key_u = 0,key_j = 0,key_i = 0,key_k = 0,key_o = 0,key_l = 0,key_p = 0,key_tab = 0,key_enter = 0;
-bool mb_left = 0, mb_right = 0, mb_middle = 0;
+bool left_click = 0, right_click = 0, middle_click = 0;
 
 POINT mouse_position;
 POINT mouse_position_view;
@@ -209,27 +209,27 @@ LRESULT CALLBACK WindowProc(HWND hwnd,UINT msg,WPARAM wparam,LPARAM lparam){
 		break;
 		
 		case WM_RBUTTONDOWN:
-			mb_right = true;
+			right_click = true;
 		break;
 		
 		case WM_RBUTTONUP:
-			mb_right = false;
+			right_click = false;
 		break;
 		
 		case WM_LBUTTONDOWN:
-			mb_left = true;
+			left_click = true;
 		break;
 		
 		case WM_LBUTTONUP:
-			mb_left = false;
+			left_click = false;
 		break;
 		
 		case WM_MBUTTONDOWN:
-			mb_middle = true;
+			middle_click = true;
 		break;
 		
 		case WM_MBUTTONUP:
-			mb_middle = false;
+			middle_click = false;
 		break;
 		
 	}
