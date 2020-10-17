@@ -7,28 +7,51 @@ Project first release: 06/24/2020
 	Tears Library is a graphics library write in C/C++ to help write applications
 without worrying with a low level api, so you can dedicate for your project
 development accelerating you development.
-Unfortulately, Tears library still haven't hardware aceleration
+
+History:
+	//Nothing here for now...
+
+Dependences:
+	
+	stb_image.h (Already comes integrated with Tears Library) (LICENSE has included in code too)
 
 Obs:
-	Do not use functions or variables of Tears that not listed here.
-	Never call display functions in any type of loop.
+	-Do not use functions or variables of Tears that not listed here.
+	-Never call TWindow functions in any type of loop.
+	-This library is boring, depending of what render api you use, some functions have be rewrite.
+	
+	-The Tears library's intention has always been to be a library without extern dependencies,
+	because of that, the use of OpenGL will use bitmap images (".png", ".bpm", ".jpg",...)
+	to write texts on the screen. For now there is no use of a library for reading ".ttf" files,
+	and even if Tears later gain the use of freetype, this dependency will be completely optional.
 
 TearsLibrary References:
 
 	Compile links:
-	
-		-lgdi32 -lgdiplus
+		For compile in Windows:
+			if use GDI+,link librarys:      -lgdi32 -lgdiplus
+			if use OPENGL, link librarys:   -lopengl32
+		For compile in Linux:
+			link librarys:                  -lX11 -lXrandr -lGL
+		
+	Define configure:
+
+		USE_OPENGL				(Tears OpenGL render)
+		USE_OPENGL_CONTEXT		(Raw OpenGL Context)
+		USE_GDIPLUS			 	(Tears GDI+ render(only windows))(Not recommended)
+
+		FIX_BORDER				(Show client area ignoring a border size)
 		
 	Global variables:
 	
 		int fps;
 		
 		//Key input:
-		bool key_*;
+		bool vk_*;
 		//Exemple of key_...:
-			key_a , key_b , key_c (and others alphabet characters (-ç) )
-			key_0 , key_1 , key_2 (and others numeric characters)
-			key_escape , key_space , key_ctrl , key_shift , key_right (and others)
+			vk_a , vk_b , vk_c (and others alphabet characters (-ç) )
+			vk_0 , vk_1 , vk_2 (and others numeric characters)
+			vk_escape , vk_space , vk_ctrl , vk_shift , vk_right (and others)
 			
 		//Mouse input:
 		bool left_click = 0, right_click = 0, middle_click = 0;
@@ -37,17 +60,21 @@ TearsLibrary References:
 		POINT mouse_position_view; (has x and y)
 		
 	Definitions:
-		
-		//Is format parameter of setFont()
+	
+		//Is format parameter for loadFont()
 		REGULAR 0
 		BOLD 1
 		ITALIC 2
 
 	Classes:
 	
-		Display:
+		TWindow:
 		
-			Display(const char* title,int width,int height);
+			TWindow();
+			TWindow(const char* title);
+			TWindow(const char* title,int width,int height);
+			TWindow(const char* title,int width,int height,bool fullscreen);
+			TWindow(const char* title,int width,int height,bool fullscreen,bool vsync);
 			void show();
 			void shutdown();
 			void setSize(int w, int h);
@@ -74,32 +101,40 @@ TearsLibrary References:
 			Image(const char* file);
 			void setPosition(int x, int y);
 			void setScale(int x, int y);
+			void setSize(int w, int h);
 			void setCropPosition(int crop_x, int crop_y);
 			void setCropSize(int crop_w, int crop_h);
 			void setOrigin(int x, int y);
 			void setAlpha(int a);
 			void setColor(int r, int g, int b);
 			void draw();
+			void draw(float a);
+			void draw(int x, int y);
+			void draw(int x, int y, int w, int h);
+			void draw(int x, int y, int w, int h, float a);
 			
-			bool cached = false; //(Use with wisdom (Tears unfortunately is not have a hardware acelerate) )
+			bool cached = false; //( (Only work in GDI+) Use with wisdom )
 			
 			float x = 0, y = 0, w = 0, h = 0, scale_x = 1, scale_y = 1, a = 0;
 			float crop_x = 0, crop_y = 0, crop_w = 0, crop_h = 0;
 			int origin_x = 0, origin_y = 0;
+			int image_width = 0, image_height = 0;
 
 	Functions:
 		
-		//(All depends of Display class)
+		//Only avalible in opengl draw mode:
+		setEllipseSides(num_sides);
 		
+		//All follow functions depends of TWindow class:
 		double getTicks();
-		void setFont(const char* font, int size, int format);
+		void loadFont(const char* font, int size, int format);
 		void resetMatrix();
 		void translate(float x, float y);
 		void rotate(float a);
 		void scale(float x, float y);
 		void drawText(const char* text,int x, int y);
 		void setColor(int r, int g, int b);
-		void setPenSize(int size);
+		void setLineSize(int size);
 		void fillRect(int x, int y, int w, int h);
 		void fillEllipse(int x, int y, int r);
 		void fillPolygon(int point[], int points_count);
@@ -119,8 +154,8 @@ Program exemple:
 
 int main(){
 	
-	//Create display
-	Display d("Tears",800,600);
+	//Create window
+	TWindow d("Tears",800,600);
 	
 	//Set window resizable
 	d.setResizable(true);
@@ -168,7 +203,7 @@ int main(){
 		
 	}
 	
-	//Close display
+	//Close TWindow
 	d.shutdown();
 	
 }
@@ -179,7 +214,7 @@ int main(){
 
 int main(){
 	
-	Display d("Tears",800,600);
+	TWindow d("Tears",800,600);
 	
 	//Instantiate a image
 	Image i("Girl.png");
@@ -222,7 +257,7 @@ int main(){
 
 int main(){
 	
-	Display d("Tears",800,600);
+	TWindow d("Tears",800,600);
 	
 	while(true){
 		
@@ -233,7 +268,7 @@ int main(){
 		fillRect(100,100,50,50);
 		
 		//Set pen line size
-		setPenSize(4);
+		setLineSize(4);
 		
 		//Draw rectangle in position 100,100 with size of 50,50
 		drawRect(20,20,760,560);
@@ -263,23 +298,20 @@ int main(){
 
 int main(){
 	
-	Display d("Tears",800,600);
+	TWindow d;
 	
-	while(true){
-		
-		//Setting font
-		//Formats:
-		//	REGULAR
-		//	BOLD
-		//	ITALIC
-		setFont("Arial", 86, REGULAR);
-		
-		//Draw text in screen
-		drawText("Hello world!",0,0);
+	loadFont("BitmapFont.png",16,16);
+	
+	while(!key_escape){
+	
+		setColor(255,255,255);
+		drawText("Hello, World!",0,0);
 		
 		d.show();
 		
 	}
+	
+	d.shutdown();
 	
 }
 
