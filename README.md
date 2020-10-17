@@ -1,6 +1,6 @@
 # Tears_Library
 
-![alt_text](/)
+![alt_text](/TearsLibraryIcon.png)
 
 -Unique header library.<br/>
 -great for prototypes.<br/>
