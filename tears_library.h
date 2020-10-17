@@ -15,7 +15,7 @@
 //		If you use a GDI+	: nothing
 //		If you use a OPENGL : stb_image.h
 //
-//    (For almost all cases, stb_image is already included in tears library)
+//      (For almost all cases, stb_image is already included in tears library)
 //
 
 //Define configure:
@@ -29,6 +29,7 @@
 
 //
 //Attention:
+//
 //    This library is open source, and has its dependencies, these dependencies have been added internally for easy use, without the user having to download each of the dependencies manually.
 //    Your unique dependence for now is stb_image.h, that has included in this code to facilitate use of library
 //
@@ -7433,6 +7434,12 @@ STBIDEF int stbi_is_16_bit_from_callbacks(stbi_io_callbacks const *c, void *user
 #include<X11/Xatom.h>
 #include<GL/glx.h>
 
+//if, for some reason, you get tears_library without stb_image integrated, you need add this:
+//#define STB_IMAGE_IMPLEMENTATION
+//#include<stb_image.h>
+//Of course, only if you have a stb_image.h in include folder
+//You know how to made this!
+
 //linux input.h (file init)
 
 bool tl_window_sized = false;
@@ -8814,11 +8821,10 @@ void drawPolygon(int point[], int points_count){
 #include<GL/glu.h>
 
 //if, for some reason, you get tears_library without stb_image integrated, you need add this:
-//Of course, only if you have a stb_image.h in include folder
-//You know how to made this!
-
 //#define STB_IMAGE_IMPLEMENTATION
 //#include<stb_image.h>
+//Of course, only if you have a stb_image.h in include folder
+//You know how to made this!
 
 #endif
 
