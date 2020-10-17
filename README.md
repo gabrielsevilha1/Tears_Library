@@ -3,4 +3,5 @@
 -great for prototypes.<br/>
 -Quick to use.<br/>
 -Open Source.<br/>
+-Linux and Windows.<br/>
 -C++.<br/>
