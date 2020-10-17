@@ -1,2 +1,5 @@
 # Tears_Library
-C/C++ Library base for Tears high level language
+-Unique header library.
+-Incrible to prototypes.
+-Quick to use.
+-C++.
