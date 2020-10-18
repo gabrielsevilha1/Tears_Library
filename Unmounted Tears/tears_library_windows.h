@@ -39,8 +39,7 @@
 //====================================================================================================
 //Dependences (begin)
 //====================================================================================================
-#define STB_IMAGE_IMPLEMENTATION
-#include<stb_image.h>
+
 //====================================================================================================
 //Dependences (end)
 //====================================================================================================
@@ -74,8 +73,8 @@
 #include<GL/glu.h>
 
 //if, for some reason, you get tears_library without stb_image integrated, you need add this:
-//#define STB_IMAGE_IMPLEMENTATION
-//#include<stb_image.h>
+#define STB_IMAGE_IMPLEMENTATION
+#include<stb_image.h>
 //Of course, only if you have a stb_image.h in include folder
 //You know how to made this!
 
