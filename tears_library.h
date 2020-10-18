@@ -7623,6 +7623,7 @@ void check_display_exist(){
 }
 
 int fps = 0;
+double tl_init_time;
 
 class TWindow{
 	
@@ -7705,6 +7706,7 @@ TWindow::TWindow(){
 	current_tick = (_ts.tv_sec*1000)+(_ts.tv_nsec/1.0e6);
 	last_tick = current_tick;
 	frame_time = current_tick - last_tick;
+  tl_init_time = _ts.tv_sec;
 	
 	int att[] = {GLX_RGBA,GLX_DEPTH_SIZE,24,GLX_DOUBLEBUFFER,1};
 	visualinfo = glXChooseVisual(display,0,att);
@@ -7718,15 +7720,15 @@ TWindow::TWindow(){
 	XMoveWindow(display,window,DESKTOP_RESOLUTION_X/2-width/2,DESKTOP_RESOLUTION_Y/2-height/2);
 	
 	XMapRaised(display,window);
-    XGrabPointer(display,window,True,0,GrabModeAsync,GrabModeAsync,window,0L,CurrentTime);
-    XGrabKeyboard(display,window,False,GrabModeAsync,GrabModeAsync,CurrentTime);
-	
+  XGrabPointer(display,window,True,0,GrabModeAsync,GrabModeAsync,window,0L,CurrentTime);
+  XGrabKeyboard(display,window,False,GrabModeAsync,GrabModeAsync,CurrentTime);
+
 	XSizeHints sizehints;
-    sizehints.flags = PMinSize|PMaxSize;
-    sizehints.min_width = 800;
-    sizehints.min_height= 600;
-    sizehints.max_width = 800;
-    sizehints.max_height= 600;
+  sizehints.flags = PMinSize|PMaxSize;
+  sizehints.min_width = 800;
+  sizehints.min_height= 600;
+  sizehints.max_width = 800;
+  sizehints.max_height= 600;
 	XSetWMSizeHints(display,window,&sizehints,XA_WM_NORMAL_HINTS);
 	
 	conf = XRRGetScreenInfo(display, RootWindow(display,0));
@@ -7761,6 +7763,7 @@ TWindow::TWindow(const char* title){
 	current_tick = (_ts.tv_sec*1000)+(_ts.tv_nsec/1.0e6);
 	last_tick = current_tick;
 	frame_time = current_tick - last_tick;
+  tl_init_time = _ts.tv_sec;
 	
 	int att[] = {GLX_RGBA,GLX_DEPTH_SIZE,24,GLX_DOUBLEBUFFER,1};
 	visualinfo = glXChooseVisual(display,0,att);
@@ -7775,15 +7778,15 @@ TWindow::TWindow(const char* title){
 	XMoveWindow(display,window,DESKTOP_RESOLUTION_X/2-width/2,DESKTOP_RESOLUTION_Y/2-height/2);
 	
 	XMapRaised(display,window);
-    XGrabPointer(display,window,True,0,GrabModeAsync,GrabModeAsync,window,0L,CurrentTime);
-    XGrabKeyboard(display,window,False,GrabModeAsync,GrabModeAsync,CurrentTime);
-	
+  XGrabPointer(display,window,True,0,GrabModeAsync,GrabModeAsync,window,0L,CurrentTime);
+  XGrabKeyboard(display,window,False,GrabModeAsync,GrabModeAsync,CurrentTime);
+
 	XSizeHints sizehints;
-    sizehints.flags = PMinSize|PMaxSize;
-    sizehints.min_width = 800;
-    sizehints.min_height= 600;
-    sizehints.max_width = 800;
-    sizehints.max_height= 600;
+  sizehints.flags = PMinSize|PMaxSize;
+  sizehints.min_width = 800;
+  sizehints.min_height= 600;
+  sizehints.max_width = 800;
+  sizehints.max_height= 600;
 	XSetWMSizeHints(display,window,&sizehints,XA_WM_NORMAL_HINTS);
 	
 	conf = XRRGetScreenInfo(display, RootWindow(display,0));
@@ -7818,6 +7821,7 @@ TWindow::TWindow(const char* title, int width, int height){
 	current_tick = (_ts.tv_sec*1000)+(_ts.tv_nsec/1.0e6);
 	last_tick = current_tick;
 	frame_time = current_tick - last_tick;
+  tl_init_time = _ts.tv_sec;
 	
 	int att[] = {GLX_RGBA,GLX_DEPTH_SIZE,24,GLX_DOUBLEBUFFER,1};
 	visualinfo = glXChooseVisual(display,0,att);
@@ -7832,15 +7836,15 @@ TWindow::TWindow(const char* title, int width, int height){
 	XMoveWindow(display,window,DESKTOP_RESOLUTION_X/2-width/2,DESKTOP_RESOLUTION_Y/2-height/2);
 	
 	XMapRaised(display,window);
-    XGrabPointer(display,window,True,0,GrabModeAsync,GrabModeAsync,window,0L,CurrentTime);
-    XGrabKeyboard(display,window,False,GrabModeAsync,GrabModeAsync,CurrentTime);
-	
+  XGrabPointer(display,window,True,0,GrabModeAsync,GrabModeAsync,window,0L,CurrentTime);
+  XGrabKeyboard(display,window,False,GrabModeAsync,GrabModeAsync,CurrentTime);
+
 	XSizeHints sizehints;
-    sizehints.flags = PMinSize|PMaxSize;
-    sizehints.min_width = width;
-    sizehints.min_height= height;
-    sizehints.max_width = width;
-    sizehints.max_height= height;
+  sizehints.flags = PMinSize|PMaxSize;
+  sizehints.min_width = width;
+  sizehints.min_height= height;
+  sizehints.max_width = width;
+  sizehints.max_height= height;
 	XSetWMSizeHints(display,window,&sizehints,XA_WM_NORMAL_HINTS);
 	
 	conf = XRRGetScreenInfo(display, RootWindow(display,0));
@@ -7876,6 +7880,7 @@ TWindow::TWindow(const char* title, int width, int height, bool fullscreen){
 	current_tick = (_ts.tv_sec*1000)+(_ts.tv_nsec/1.0e6);
 	last_tick = current_tick;
 	frame_time = current_tick - last_tick;
+  tl_init_time = _ts.tv_sec;
 	
 	int att[] = {GLX_RGBA,GLX_DEPTH_SIZE,24,GLX_DOUBLEBUFFER,1};
 	visualinfo = glXChooseVisual(display,0,att);
@@ -7890,15 +7895,15 @@ TWindow::TWindow(const char* title, int width, int height, bool fullscreen){
 	XMoveWindow(display,window,DESKTOP_RESOLUTION_X/2-width/2,DESKTOP_RESOLUTION_Y/2-height/2);
 	
 	XMapRaised(display,window);
-    XGrabPointer(display,window,True,0,GrabModeAsync,GrabModeAsync,window,0L,CurrentTime);
-    XGrabKeyboard(display,window,False,GrabModeAsync,GrabModeAsync,CurrentTime);
-	
+  XGrabPointer(display,window,True,0,GrabModeAsync,GrabModeAsync,window,0L,CurrentTime);
+  XGrabKeyboard(display,window,False,GrabModeAsync,GrabModeAsync,CurrentTime);
+
 	XSizeHints sizehints;
-    sizehints.flags = PMinSize|PMaxSize;
-    sizehints.min_width = width;
-    sizehints.min_height= height;
-    sizehints.max_width = width;
-    sizehints.max_height= height;
+  sizehints.flags = PMinSize|PMaxSize;
+  sizehints.min_width = width;
+  sizehints.min_height= height;
+  sizehints.max_width = width;
+  sizehints.max_height= height;
 	XSetWMSizeHints(display,window,&sizehints,XA_WM_NORMAL_HINTS);
 	
 	conf = XRRGetScreenInfo(display, RootWindow(display,0));
@@ -7962,6 +7967,7 @@ TWindow::TWindow(const char* title, int width, int height, bool fullscreen, bool
 	current_tick = (_ts.tv_sec*1000)+(_ts.tv_nsec/1.0e6);
 	last_tick = current_tick;
 	frame_time = current_tick - last_tick;
+  tl_init_time = _ts.tv_sec;
 	
 	int att[] = {GLX_RGBA,GLX_DEPTH_SIZE,24,GLX_DOUBLEBUFFER,1};
 	visualinfo = glXChooseVisual(display,0,att);
@@ -8326,19 +8332,17 @@ void TWindow::showCursor(bool enable){
 	}
 }
 void TWindow::setCursor(const char* file){
-	int len = strlen(file);
-	if(file[len-1] == 'o' && file[len-2] == 'c' && file[len-3] == 'i'){
-		
-	}else{
-		TL_ERROR_LOG("You can not use this image file for cursor (try .ico)\n");
-	}
+  //Not avalible in linux
+  //for now, try use "showCursor(false)" and draw a image in mouse coordnates
 }
 void TWindow::shutdown(){
 	tl_is_display_active = false;
 	if(this->fullscreen)setFullscreen(false);
 	glXMakeCurrent(display,0,0);
+  XUnmapWindow(display,window);
 	XDestroyWindow(display,window);
-	XCloseDisplay(display);
+  //For some reason, this function causes crash:
+  //XCloseDisplay(display);
 }
 void TWindow::show(){
 
@@ -8379,10 +8383,11 @@ void TWindow::show(){
 	}
 	
 }
-double getTicks(){
+double getTime(){
 	struct timespec ts;
 	clock_gettime(CLOCK_REALTIME,&ts);
-	return (ts.tv_sec*1000)+(ts.tv_nsec/1.0e6);
+	//return (ts.tv_sec*1000)+(ts.tv_nsec/1.0e6);
+  return (((ts.tv_sec-tl_init_time)*1000.0f)+ts.tv_nsec/1.0e6)/1000;
 }
 
 #if defined TL_USE_OPENGL
@@ -8407,6 +8412,8 @@ public:
 	void setOrigin(int x, int y);
 	void setAlpha(int a);
 	void setColor(int r, int g, int b);
+  void flip_x(bool flip);
+  void flip_y(bool flip);
 	void draw();
 	void draw(float a);
 	void draw(int x, int y);
@@ -8417,12 +8424,13 @@ public:
 	float crop_x = 0, crop_y = 0, crop_w = 0, crop_h = 0;
 	int origin_x = 0, origin_y = 0;
 	int image_width = 0, image_height = 0;
+  bool flipped_x = 0, flipped_y = 0;
+  int color_r = 255, color_g = 255, color_b = 255;
+  int alpha = 255;
 	
 private:
 
 	unsigned int texture;
-	int alpha = 255;
-	int color_r = 255, color_g = 255, color_b = 255;
 	
 };
 Image::Image(const char* file){
@@ -8493,7 +8501,11 @@ void Image::draw(){
 
 	glLoadIdentity();
 	glTranslatef(x,y,0.0);
-	glScalef(scale_x,scale_y,0.0);
+  if(flipped_x)
+    glScalef(-1.0,1.0,1.0);
+  if(flipped_y)
+    glScalef(1.0,-1.0,1.0);
+  glScalef(scale_x,scale_y,0.0);
 	glRotatef(a,0.0,0.0,1.0);
 	glBindTexture(GL_TEXTURE_2D,texture);
 	glColor4f(color_r,color_g,color_b,alpha);
@@ -8515,6 +8527,10 @@ void Image::draw(float a){
 
 	glLoadIdentity();
 	glTranslatef(x,y,0.0);
+  if(flipped_x)
+    glScalef(-1.0,1.0,1.0);
+  if(flipped_y)
+    glScalef(1.0,-1.0,1.0);
 	glScalef(scale_x,scale_y,0.0);
 	glRotatef(a,0.0,0.0,1.0);
 	glBindTexture(GL_TEXTURE_2D,texture);
@@ -8537,6 +8553,10 @@ void Image::draw(int x, int y){
 
 	glLoadIdentity();
 	glTranslatef(x,y,0.0);
+  if(flipped_x)
+    glScalef(-1.0,1.0,1.0);
+  if(flipped_y)
+    glScalef(1.0,-1.0,1.0);
 	glScalef(scale_x,scale_y,0.0);
 	glRotatef(a,0.0,0.0,1.0);
 	glBindTexture(GL_TEXTURE_2D,texture);
@@ -8559,6 +8579,10 @@ void Image::draw(int x, int y, int w, int h){
 
 	glLoadIdentity();
 	glTranslatef(x,y,0.0);
+  if(flipped_x)
+    glScalef(-1.0,1.0,1.0);
+  if(flipped_y)
+    glScalef(1.0,-1.0,1.0);
 	glScalef(scale_x,scale_y,0.0);
 	glRotatef(a,0.0,0.0,1.0);
 	glBindTexture(GL_TEXTURE_2D,texture);
@@ -8581,6 +8605,10 @@ void Image::draw(int x, int y, int w, int h, float a){
 
 	glLoadIdentity();
 	glTranslatef(x,y,0.0);
+  if(flipped_x)
+    glScalef(-1.0,1.0,1.0);
+  if(flipped_y)
+    glScalef(1.0,-1.0,1.0);
 	glScalef(scale_x,scale_y,0.0);
 	glRotatef(a,0.0,0.0,1.0);
 	glBindTexture(GL_TEXTURE_2D,texture);
@@ -8642,6 +8670,12 @@ void Image::setColor(int r, int g, int b){
 		this->color_g = g;
 		this->color_b = b;
 	#endif
+}
+void Image::flip_x(bool flip){
+  flipped_x = flip;
+}
+void Image::flip_y(bool flip){
+  flipped_y = flip;
 }
 
 void loadFont(const char* bitmap,int letter_width, int letter_height){
@@ -9734,7 +9768,7 @@ void TWindow::show(){
 	
 }
 
-double getTicks(){
+double getTime(){
 	return GetTickCount();
 }
 
@@ -9770,6 +9804,9 @@ public:
 	float crop_x = 0, crop_y = 0, crop_w = 0, crop_h = 0;
 	int origin_x = 0, origin_y = 0;
 	int image_width = 0, image_height = 0;
+  bool flipped_x = 0, flipped_y = 0;
+  int color_r = 255, color_g = 255, color_b = 255;
+  int alpha = 255;
 	
 private:
 
@@ -9790,8 +9827,6 @@ private:
 	#else
 	
 		unsigned int texture;
-		int alpha = 255;
-		int color_r = 255, color_g = 255, color_b = 255;
 	
 	#endif
 		
@@ -9938,6 +9973,10 @@ void Image::draw(){
 		if(!cached){
 			tl_graphics->ResetTransform();
 			tl_graphics->TranslateTransform(x,y);
+      if(flipped_x)
+        tl_graphics->ScaleTransform(-1.0,1.0);
+      if(flipped_y)
+        tl_graphics->ScaleTransform(1.0,-1.0);
 			tl_graphics->ScaleTransform(scale_x,scale_y);
 			tl_graphics->RotateTransform(a);
 			tl_graphics->DrawImage(img,Gdiplus::Rect(0-origin_x,0-origin_y,w,h),crop_x,crop_y,crop_w,crop_h,Gdiplus::UnitPixel,&image_attribute);
@@ -9950,6 +9989,10 @@ void Image::draw(){
 	
 		glLoadIdentity();
 		glTranslatef(x,y,0.0);
+    if(flipped_x)
+      glScalef(-1.0,1.0,1.0);
+    if(flipped_y)
+      glScalef(1.0,-1.0,1.0);
 		glScalef(scale_x,scale_y,0.0);
 		glRotatef(a,0.0,0.0,1.0);
 		glBindTexture(GL_TEXTURE_2D,texture);
@@ -9977,6 +10020,10 @@ void Image::draw(float a){
 		if(!cached){
 			tl_graphics->ResetTransform();
 			tl_graphics->TranslateTransform(x,y);
+      if(flipped_x)
+        tl_graphics->ScaleTransform(-1.0,1.0);
+      if(flipped_y)
+        tl_graphics->ScaleTransform(1.0,-1.0);
 			tl_graphics->ScaleTransform(scale_x,scale_y);
 			tl_graphics->RotateTransform(a);
 			tl_graphics->DrawImage(img,Gdiplus::Rect(0-origin_x,0-origin_y,w,h),crop_x,crop_y,crop_w,crop_h,Gdiplus::UnitPixel,&image_attribute);
@@ -9989,6 +10036,10 @@ void Image::draw(float a){
 	
 		glLoadIdentity();
 		glTranslatef(x,y,0.0);
+    if(flipped_x)
+      glScalef(-1.0,1.0,1.0);
+    if(flipped_y)
+      glScalef(1.0,-1.0,1.0);
 		glScalef(scale_x,scale_y,0.0);
 		glRotatef(a,0.0,0.0,1.0);
 		glBindTexture(GL_TEXTURE_2D,texture);
@@ -10016,6 +10067,10 @@ void Image::draw(int x, int y){
 		if(!cached){
 			tl_graphics->ResetTransform();
 			tl_graphics->TranslateTransform(x,y);
+      if(flipped_x)
+        tl_graphics->ScaleTransform(-1.0,1.0);
+      if(flipped_y)
+        tl_graphics->ScaleTransform(1.0,-1.0);
 			tl_graphics->ScaleTransform(scale_x,scale_y);
 			tl_graphics->RotateTransform(a);
 			tl_graphics->DrawImage(img,Gdiplus::Rect(0-origin_x,0-origin_y,w,h),crop_x,crop_y,crop_w,crop_h,Gdiplus::UnitPixel,&image_attribute);
@@ -10028,6 +10083,10 @@ void Image::draw(int x, int y){
 	
 		glLoadIdentity();
 		glTranslatef(x,y,0.0);
+    if(flipped_x)
+      glScalef(-1.0,1.0,1.0);
+    if(flipped_y)
+      glScalef(1.0,-1.0,1.0);
 		glScalef(scale_x,scale_y,0.0);
 		glRotatef(a,0.0,0.0,1.0);
 		glBindTexture(GL_TEXTURE_2D,texture);
@@ -10055,6 +10114,10 @@ void Image::draw(int x, int y, int w, int h){
 		if(!cached){
 			tl_graphics->ResetTransform();
 			tl_graphics->TranslateTransform(x,y);
+      if(flipped_x)
+        tl_graphics->ScaleTransform(-1.0,1.0);
+      if(flipped_y)
+        tl_graphics->ScaleTransform(1.0,-1.0);
 			tl_graphics->ScaleTransform(scale_x,scale_y);
 			tl_graphics->RotateTransform(a);
 			tl_graphics->DrawImage(img,Gdiplus::Rect(0-origin_x,0-origin_y,w,h),crop_x,crop_y,crop_w,crop_h,Gdiplus::UnitPixel,&image_attribute);
@@ -10067,6 +10130,10 @@ void Image::draw(int x, int y, int w, int h){
 	
 		glLoadIdentity();
 		glTranslatef(x,y,0.0);
+    if(flipped_x)
+      glScalef(-1.0,1.0,1.0);
+    if(flipped_y)
+      glScalef(1.0,-1.0,1.0);
 		glScalef(scale_x,scale_y,0.0);
 		glRotatef(a,0.0,0.0,1.0);
 		glBindTexture(GL_TEXTURE_2D,texture);
@@ -10094,6 +10161,10 @@ void Image::draw(int x, int y, int w, int h, float a){
 		if(!cached){
 			tl_graphics->ResetTransform();
 			tl_graphics->TranslateTransform(x,y);
+      if(flipped_x)
+        tl_graphics->ScaleTransform(-1.0,1.0);
+      if(flipped_y)
+        tl_graphics->ScaleTransform(1.0,-1.0);
 			tl_graphics->ScaleTransform(scale_x,scale_y);
 			tl_graphics->RotateTransform(a);
 			tl_graphics->DrawImage(img,Gdiplus::Rect(0-origin_x,0-origin_y,w,h),crop_x,crop_y,crop_w,crop_h,Gdiplus::UnitPixel,&image_attribute);
@@ -10106,6 +10177,10 @@ void Image::draw(int x, int y, int w, int h, float a){
 	
 		glLoadIdentity();
 		glTranslatef(x,y,0.0);
+    if(flipped_x)
+      glScalef(-1.0,1.0,1.0);
+    if(flipped_y)
+      glScalef(1.0,-1.0,1.0);
 		glScalef(scale_x,scale_y,0.0);
 		glRotatef(a,0.0,0.0,1.0);
 		glBindTexture(GL_TEXTURE_2D,texture);
@@ -10169,6 +10244,12 @@ void Image::setColor(int r, int g, int b){
 		this->color_g = g;
 		this->color_b = b;
 	#endif
+}
+void Image::flip_x(bool flip){
+  flipped_x = flip;
+}
+void Image::flip_y(bool flip){
+  flipped_y = flip;
 }
 
 /*
