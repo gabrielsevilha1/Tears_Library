@@ -76,12 +76,6 @@
 //Of course, only if you have a stb_image.h in include folder
 //You know how to made this!
 
-//if, for some reason, you get tears_library without stb_image integrated, you need add this:
-#define STB_IMAGE_IMPLEMENTATION
-#include<stb_image.h>
-//Of course, only if you have a stb_image.h in include folder
-//You know how to made this!
-
 //linux input.h (file init)
 #include"linux_input.h"
 //linux_input.h (file end)
