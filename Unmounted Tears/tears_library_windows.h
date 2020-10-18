@@ -837,7 +837,7 @@ void TWindow::show(){
 	
 }
 
-double getTicks(){
+double getTime(){
 	return GetTickCount();
 }
 
@@ -873,6 +873,9 @@ public:
 	float crop_x = 0, crop_y = 0, crop_w = 0, crop_h = 0;
 	int origin_x = 0, origin_y = 0;
 	int image_width = 0, image_height = 0;
+  bool flipped_x = 0, flipped_y = 0;
+  int color_r = 255, color_g = 255, color_b = 255;
+  int alpha = 255;
 	
 private:
 
@@ -893,8 +896,6 @@ private:
 	#else
 	
 		unsigned int texture;
-		int alpha = 255;
-		int color_r = 255, color_g = 255, color_b = 255;
 	
 	#endif
 		
@@ -1041,6 +1042,10 @@ void Image::draw(){
 		if(!cached){
 			tl_graphics->ResetTransform();
 			tl_graphics->TranslateTransform(x,y);
+      if(flipped_x)
+        tl_graphics->ScaleTransform(-1.0,1.0);
+      if(flipped_y)
+        tl_graphics->ScaleTransform(1.0,-1.0);
 			tl_graphics->ScaleTransform(scale_x,scale_y);
 			tl_graphics->RotateTransform(a);
 			tl_graphics->DrawImage(img,Gdiplus::Rect(0-origin_x,0-origin_y,w,h),crop_x,crop_y,crop_w,crop_h,Gdiplus::UnitPixel,&image_attribute);
@@ -1053,6 +1058,10 @@ void Image::draw(){
 	
 		glLoadIdentity();
 		glTranslatef(x,y,0.0);
+    if(flipped_x)
+      glScalef(-1.0,1.0,1.0);
+    if(flipped_y)
+      glScalef(1.0,-1.0,1.0);
 		glScalef(scale_x,scale_y,0.0);
 		glRotatef(a,0.0,0.0,1.0);
 		glBindTexture(GL_TEXTURE_2D,texture);
@@ -1080,6 +1089,10 @@ void Image::draw(float a){
 		if(!cached){
 			tl_graphics->ResetTransform();
 			tl_graphics->TranslateTransform(x,y);
+      if(flipped_x)
+        tl_graphics->ScaleTransform(-1.0,1.0);
+      if(flipped_y)
+        tl_graphics->ScaleTransform(1.0,-1.0);
 			tl_graphics->ScaleTransform(scale_x,scale_y);
 			tl_graphics->RotateTransform(a);
 			tl_graphics->DrawImage(img,Gdiplus::Rect(0-origin_x,0-origin_y,w,h),crop_x,crop_y,crop_w,crop_h,Gdiplus::UnitPixel,&image_attribute);
@@ -1092,6 +1105,10 @@ void Image::draw(float a){
 	
 		glLoadIdentity();
 		glTranslatef(x,y,0.0);
+    if(flipped_x)
+      glScalef(-1.0,1.0,1.0);
+    if(flipped_y)
+      glScalef(1.0,-1.0,1.0);
 		glScalef(scale_x,scale_y,0.0);
 		glRotatef(a,0.0,0.0,1.0);
 		glBindTexture(GL_TEXTURE_2D,texture);
@@ -1119,6 +1136,10 @@ void Image::draw(int x, int y){
 		if(!cached){
 			tl_graphics->ResetTransform();
 			tl_graphics->TranslateTransform(x,y);
+      if(flipped_x)
+        tl_graphics->ScaleTransform(-1.0,1.0);
+      if(flipped_y)
+        tl_graphics->ScaleTransform(1.0,-1.0);
 			tl_graphics->ScaleTransform(scale_x,scale_y);
 			tl_graphics->RotateTransform(a);
 			tl_graphics->DrawImage(img,Gdiplus::Rect(0-origin_x,0-origin_y,w,h),crop_x,crop_y,crop_w,crop_h,Gdiplus::UnitPixel,&image_attribute);
@@ -1131,6 +1152,10 @@ void Image::draw(int x, int y){
 	
 		glLoadIdentity();
 		glTranslatef(x,y,0.0);
+    if(flipped_x)
+      glScalef(-1.0,1.0,1.0);
+    if(flipped_y)
+      glScalef(1.0,-1.0,1.0);
 		glScalef(scale_x,scale_y,0.0);
 		glRotatef(a,0.0,0.0,1.0);
 		glBindTexture(GL_TEXTURE_2D,texture);
@@ -1158,6 +1183,10 @@ void Image::draw(int x, int y, int w, int h){
 		if(!cached){
 			tl_graphics->ResetTransform();
 			tl_graphics->TranslateTransform(x,y);
+      if(flipped_x)
+        tl_graphics->ScaleTransform(-1.0,1.0);
+      if(flipped_y)
+        tl_graphics->ScaleTransform(1.0,-1.0);
 			tl_graphics->ScaleTransform(scale_x,scale_y);
 			tl_graphics->RotateTransform(a);
 			tl_graphics->DrawImage(img,Gdiplus::Rect(0-origin_x,0-origin_y,w,h),crop_x,crop_y,crop_w,crop_h,Gdiplus::UnitPixel,&image_attribute);
@@ -1170,6 +1199,10 @@ void Image::draw(int x, int y, int w, int h){
 	
 		glLoadIdentity();
 		glTranslatef(x,y,0.0);
+    if(flipped_x)
+      glScalef(-1.0,1.0,1.0);
+    if(flipped_y)
+      glScalef(1.0,-1.0,1.0);
 		glScalef(scale_x,scale_y,0.0);
 		glRotatef(a,0.0,0.0,1.0);
 		glBindTexture(GL_TEXTURE_2D,texture);
@@ -1197,6 +1230,10 @@ void Image::draw(int x, int y, int w, int h, float a){
 		if(!cached){
 			tl_graphics->ResetTransform();
 			tl_graphics->TranslateTransform(x,y);
+      if(flipped_x)
+        tl_graphics->ScaleTransform(-1.0,1.0);
+      if(flipped_y)
+        tl_graphics->ScaleTransform(1.0,-1.0);
 			tl_graphics->ScaleTransform(scale_x,scale_y);
 			tl_graphics->RotateTransform(a);
 			tl_graphics->DrawImage(img,Gdiplus::Rect(0-origin_x,0-origin_y,w,h),crop_x,crop_y,crop_w,crop_h,Gdiplus::UnitPixel,&image_attribute);
@@ -1209,6 +1246,10 @@ void Image::draw(int x, int y, int w, int h, float a){
 	
 		glLoadIdentity();
 		glTranslatef(x,y,0.0);
+    if(flipped_x)
+      glScalef(-1.0,1.0,1.0);
+    if(flipped_y)
+      glScalef(1.0,-1.0,1.0);
 		glScalef(scale_x,scale_y,0.0);
 		glRotatef(a,0.0,0.0,1.0);
 		glBindTexture(GL_TEXTURE_2D,texture);
@@ -1272,6 +1313,12 @@ void Image::setColor(int r, int g, int b){
 		this->color_g = g;
 		this->color_b = b;
 	#endif
+}
+void Image::flip_x(bool flip){
+  flipped_x = flip;
+}
+void Image::flip_y(bool flip){
+  flipped_y = flip;
 }
 
 /*
