@@ -1,0 +1,35 @@
+2.2 - 10/21/2020:
+
+	-Bugs fixed involving scales and resolutions in linux
+	-Documentation has been fixed
+
+2.1 - 10/17/2020:
+
+	-Some class names have been changed:
+		getTicks -> getTime().
+	-New functions added to Image class:
+		flip_x(bool flip);
+		flip_y(bool flip);
+	-Public access to some attributes of Image class
+
+2.0 - 10/17/2020:
+
+	-Tears Library now is avalible to Linux
+	-Added OpenGL API to draw graphics.
+	-Some class names have been changed:
+		Display -> TWindow.
+	-Added use of polymorphism functions(overload in C++) to a some TWindow and a Image functions.
+	-Added Raw Opengl context.
+	-Added BitMap font for OpenGL graphics.
+	-Some variables name have been changed:
+		key_* -> vk_* (exemple: vk_a, vk_escape, vk_0 ...)
+	-Some functions name have been changed:
+		setPenSize -> setLineSize
+
+1.1 - 06/26/2020:
+
+	-Some variables names have been changed.
+
+1.0 - 06/24/2020:
+	
+	-Released.
