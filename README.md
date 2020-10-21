@@ -2,7 +2,7 @@
 
 -Unique header library.<br/>
 -Quick to use.<br/>
--Open Source.<br/>
+-Open Source (zlib).<br/>
 -Linux and Windows.<br/>
 -C++.<br/>
 
