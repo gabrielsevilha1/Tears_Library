@@ -10,7 +10,7 @@ For compile in Windows: -lopengl32 -lgdi32 -lgdiplus <br/>
 For compile in Linux: -lX11 -lXrandr -lGL
 
 Exemple:<br/>
-#include"tears_library.h"<br/>
+<tab>#include"tears_library.h"<br/>
 int main(){<br/>
 TWindow w;<br/>
     while(!vk_escape){<br/>
