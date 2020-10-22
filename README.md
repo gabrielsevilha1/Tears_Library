@@ -11,6 +11,7 @@ For compile in Linux:   -lX11 -lXrandr -lGL <br/>
 
 Exemple:<br/>
 ```C++
+//Create simple window exemple
 #include"tears_library.h"
 int main(){
     TWindow w;
@@ -19,7 +20,7 @@ int main(){
     }
     w.shutdown();
 }
-
+//Image exemple
 #include"tears_library.h"
 int main(){
     TWindow w("window name",800,600);
