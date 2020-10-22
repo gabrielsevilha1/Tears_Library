@@ -2,6 +2,7 @@
 
 	-Windows port revised.
 	-Windows bugs fixed.
+	-Windows vsync fixed.
 	-Documentation errors fixed.
 
 2.2 - 10/21/2020:

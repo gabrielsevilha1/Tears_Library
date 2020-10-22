@@ -400,6 +400,7 @@ int main(){
 
 	-Windows port revised.
 	-Windows bugs fixed.
+	-Windows vsync fixed.
 	-Documentation errors fixed.
 
 2.2 - 10/21/2020:
@@ -9266,6 +9267,9 @@ void drawPolygon(int point[], int points_count){
 #else
 #include<GL/gl.h>
 #include<GL/glu.h>
+//#include<GL/glext.h>
+//#include<GL/wgl.h>
+#include<GL/wglext.h>
 
 //if, for some reason, you get tears_library without stb_image integrated, you need add this:
 //#define STB_IMAGE_IMPLEMENTATION
@@ -10012,6 +10016,8 @@ void TWindow::setFullscreen(bool fullscreen){
 }
 void TWindow::setVsync(bool enable){
 	vsync = enable;
+  PFNWGLSWAPINTERVALEXTPROC wglSwapIntervalEXT = (PFNWGLSWAPINTERVALEXTPROC) wglGetProcAddress("wglSwapIntervalEXT");
+  wglSwapIntervalEXT(enable);
 }
 void TWindow::setTitle(const char* title){
 	SetWindowTextA(hwnd,title);
