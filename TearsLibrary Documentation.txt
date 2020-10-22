@@ -4,26 +4,6 @@ Created by: Gabriel Sevilha <3
 Project init: 06/15/2020
 Project first release: 06/24/2020
 
-Zlib license:
-
-	Copyright (c) 2020 Gabriel Sevilha
-
-	This software is provided 'as-is', without any express or implied
-	warranty. In no event will the authors be held liable for any damages
-	arising from the use of this software.
-
-	Permission is granted to anyone to use this software for any purpose,
-	including commercial applications, and to alter it and redistribute it
-	freely, subject to the following restrictions:
-
-	1. The origin of this software must not be misrepresented; you must not
-	   claim that you wrote the original software. If you use this software
-	   in a product, an acknowledgment in the product documentation would be
-	   appreciated but is not required.
-	2. Altered source versions must be plainly marked as such, and must not be
-	   misrepresented as being the original software.
-	3. This notice may not be removed or altered from any source distribution.
-
 Description:
 
 		Tears Library is a graphics library write in C/C++ to help write applications
@@ -32,77 +12,77 @@ Description:
 
 Read:
 
-		Tears Library is a unique header graphics library designed to facilitate prototyping, simulations,
+    	Tears Library is a unique header graphics library designed to facilitate prototyping, simulations,
 	testing and game development. Initially, Tears used GDI+ to draw on the screen, because of that,
 	unfortunately it was developed to be compiled only in C++, and cannot be used from pure C.
 	Due to the low performance of GDI+, Tears gains an OpenGL context, in which it can be used in pure
-	form(for use with modern OpenGL) or to be used by the Tears Library for graphic design.
-	Tears offers several 2D drawing functions, and can be used for 3D development using the pure context of OpenGL,
+	form (for use with modern OpenGL) or to be used by the Tears Library for graphic draw.
+	Tears offers several 2D drawing functions, and a library can be used for 3D development using the pure context of OpenGL,
 	however the library itself does not yet include support for 3D development, and there are no plans for future implementation, although it does not discard the idea.
 	Tears Library was inspired by the graphics2d module in java, but also in many high-level language libraries.
-	
+
 	This library was developed by me (Gabriel Sevilha), and i like it a lot, please respect it!
-	
+
 Dependences:
-	
-	stb_image.h (Already comes integrated with Tears Library) (LICENSE has included in code too)
+
+	stb_image.h (Already comes integrated with Tears Library to facilitate use) (LICENSE has included in code too)
 
 ============================================== Tears Library Manual ==============================================
 
 Attention:
 
-	-Do not use functions or variables of Tears that not listed here (if you do this, can cause problems).
-	-Never call TWindow functions in any type of loop.
-	-This library is boring, depending of what render api you use, some functions have be rewrite.
-	-Do not use GDI+ anymore, OpenGL comes for standard now.
-	
-	-The Tears library's intention has always been to be a library without extern dependencies,
-	because of that, the use of OpenGL will use bitmap images (".png", ".bpm", ".jpg",...)
-	to write texts on the screen. For now there is no use of a library for reading ".ttf" files,
-	and even if Tears later gain the use of freetype, this dependency will be completely optional.
+  -Do not use functions or variables of Tears that not listed here (if you do this, can cause problems).
+  -Never call TWindow functions in any type of loop.
+  -This library is boring, depending of what render api you use, some functions have be rewrite.
+  -Do not use GDI+ anymore, OpenGL comes for standard now.
+  
+  -The Tears library's intention has always been to be a library without extern dependencies,
+  because of that, the use of OpenGL will use bitmap images (".png", ".bpm", ".jpg",...)
+  to write texts on the screen. For now there is no use of a library for reading ".ttf" files,
+  and even if Tears later gain the use of freetype, this dependency will be completely optional.
 
 Tears Library References:
 
-	How to compile:
-	
-		For compile in Windows:
-			if use GDI+,link librarys:      -lgdi32 -lgdiplus
-			if use OPENGL, link librarys:   -lopengl32
-			
-		For compile in Linux:
-			link librarys:                  -lX11 -lXrandr -lGL
-		
-	Define configure:
+  How to compile:
+  
+    For compile in Windows:
+      if use GDI+,link librarys:      -lgdi32 -lgdiplus
+      if use OPENGL, link librarys:   -lopengl32
+      
+    For compile in Linux:
+      link librarys:                  -lX11 -lXrandr -lGL
+    
+  Define configure:
 
-		USE_OPENGL				(Tears OpenGL render)
-		USE_OPENGL_CONTEXT		(Raw OpenGL Context)
-		USE_GDIPLUS			 	(Tears GDI+ render(only windows))(Not recommended)
+    USE_OPENGL        (Tears OpenGL render)
+    USE_OPENGL_CONTEXT    (Raw OpenGL Context)
+    USE_GDIPLUS       (Tears GDI+ render(only windows))(Not recommended)
 
-		FIX_BORDER				(Show client area ignoring a border size)(for now, only avalible in Windows, but not recomend that you use it)
-		
-	Global variables:
-	
-		int fps;                (print this value, and you see a fps count of you program)
-		
-		//Key input:
-		bool vk_*;
-		//Exemple of key_...:
-			vk_a , vk_b , vk_c (and others alphabet characters (-ç) )
-			vk_0 , vk_1 , vk_2 (and others numeric characters)
-			vk_escape , vk_space , vk_ctrl , vk_shift , vk_right (and others)
-			
-		//Mouse input:
-		bool left_click = 0, right_click = 0, middle_click = 0;
-		
-		POINT mouse_position;      (has x and y) (in linux, it is not a POINT struct)
-		POINT mouse_position_view; (has x and y) (in linux, it is not a POINT struct)
-		
-	Definitions:
-	
-		//Is format parameter for loadFont()
-		REGULAR 0   (only avalible with window and GDI+)
-		BOLD 1      (only avalible with window and GDI+)
-		ITALIC 2	(only avalible with window and GDI+)
+    FIX_BORDER        (Show client area ignoring a border size)(for now, only avalible in Windows, but not recomend that you use it)
+    
+  Global variables:
+  
+    int fps;                (print this value, and you see a fps count of you program)
+    
+    //Key input:
+    bool vk_*;
+    //Exemple of key_...:
+      vk_a , vk_b , vk_c (and others alphabet characters (-ç) )
+      vk_0 , vk_1 , vk_2 (and others numeric characters)
+      vk_escape , vk_space , vk_ctrl , vk_shift , vk_right (and others)
+      
+    //Mouse input:
+    bool left_click = 0, right_click = 0, middle_click = 0;
+    
+    POINT mouse_position;      (has x and y) (in linux, it is not a POINT struct)
+    POINT mouse_position_view; (has x and y) (in linux, it is not a POINT struct)
+    
+  Definitions:
+  
+    //Is format parameter for loadFont()
+    REGULAR 0   (only avalible with window and GDI+)
+    BOLD 1      (only avalible with window and GDI+)
+    ITALIC 2  (only avalible with window and GDI+)
 
 	Classes:
 	
