@@ -1,7 +1,13 @@
+2.3 - 10/22/2020:
+
+	-Windows port revised.
+	-Windows bugs fixed.
+	-Documentation errors fixed.
+
 2.2 - 10/21/2020:
 
-	-Bugs fixed involving scales and resolutions in linux
-	-Documentation has been fixed
+	-Bugs fixed involving scales and resolutions in linux.
+	-Documentation has been fixed.
 
 2.1 - 10/17/2020:
 
@@ -10,11 +16,11 @@
 	-New functions added to Image class:
 		flip_x(bool flip);
 		flip_y(bool flip);
-	-Public access to some attributes of Image class
+	-Public access to some attributes of Image class.
 
 2.0 - 10/17/2020:
 
-	-Tears Library now is avalible to Linux
+	-Tears Library now is avalible to Linux.
 	-Added OpenGL API to draw graphics.
 	-Some class names have been changed:
 		Display -> TWindow.
