@@ -16,6 +16,7 @@ TWindow w;
     while(!vk_escape){
         w.show();
     }
-}```
+}
+```
 
 ***by: Gabriel Sevilha <3***
