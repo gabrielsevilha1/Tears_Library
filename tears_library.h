@@ -27,12 +27,14 @@ freely, subject to the following restrictions:
 
 //For compile in windows:
 //		if use GDI+   :	link librarys: -lgdi32 -lgdiplus
-//		if use OPENGL : link librarys: -lopengl32
+//		if use OPENGL : link librarys: -lgdi32 -lopengl32
 
 //For compile in linux:
 //		link librarys: -lX11 -lXrandr -lGL
 
 //Define configure:
+//
+//    These need called before a: #include"tears_library.h"
 //
 //		USE_OPENGL				 (Tears OpenGL render)
 //		USE_OPENGL_CONTEXT 		 (Raw OpenGL Context)
@@ -65,9 +67,9 @@ Read:
 	form (for use with modern OpenGL) or to be used by the Tears Library for graphic draw.
 	Tears offers several 2D drawing functions, and a library can be used for 3D development using the pure context of OpenGL,
 	however the library itself does not yet include support for 3D development, and there are no plans for future implementation, although it does not discard the idea.
-	Tears Library was inspired by the graphics2d module in java, but also in many high-level language libraries.
+	Tears Library was inspired by the graphics2d module of java, but also in many high-level language libraries.
 
-	This library was developed by me (Gabriel Sevilha), and i like it a lot, please respect it!
+	This library was developed by me (Gabriel Sevilha), and i like it a lot, please respect it! S2
 
 Dependences:
 
@@ -82,7 +84,7 @@ Attention:
   -This library is boring, depending of what render api you use, some functions have be rewrite.
   -Do not use GDI+ anymore, OpenGL comes for standard now.
   
-  -The Tears library's intention has always been to be a library without extern dependencies,
+  -The Tears Library intention has always been to be a library without extern dependencies,
   because of that, the use of OpenGL will use bitmap images (".png", ".bpm", ".jpg",...)
   to write texts on the screen. For now there is no use of a library for reading ".ttf" files,
   and even if Tears later gain the use of freetype, this dependency will be completely optional.
@@ -93,18 +95,20 @@ Tears Library References:
   
     For compile in Windows:
       if use GDI+,link librarys:      -lgdi32 -lgdiplus
-      if use OPENGL, link librarys:   -lopengl32
+      if use OPENGL, link librarys:   -lopengl32 -lgdi32
       
     For compile in Linux:
       link librarys:                  -lX11 -lXrandr -lGL
     
   Define configure:
 
-    USE_OPENGL        (Tears OpenGL render)
-    USE_OPENGL_CONTEXT    (Raw OpenGL Context)
-    USE_GDIPLUS       (Tears GDI+ render(only windows))(Not recommended)
+    //These need called before a: #include"tears_library.h"
 
-    FIX_BORDER        (Show client area ignoring a border size)(for now, only avalible in Windows, but not recomend that you use it)
+    USE_OPENGL          (Tears OpenGL render)
+    USE_OPENGL_CONTEXT  (Raw OpenGL Context)
+    USE_GDIPLUS         (Tears GDI+ render(only windows))(Not recommended)
+
+    FIX_BORDER          (Show client area ignoring a border size)(for now, only avalible in Windows, but not recomend that you use it)
     
   Global variables:
   
@@ -128,7 +132,7 @@ Tears Library References:
     //Is format parameter for loadFont()
     REGULAR 0   (only avalible with window and GDI+)
     BOLD 1      (only avalible with window and GDI+)
-    ITALIC 2  (only avalible with window and GDI+)
+    ITALIC 2    (only avalible with window and GDI+)
 
   Classes:
   
@@ -391,41 +395,48 @@ int main(){
 
 //Version notes (file begin)
 /*
+
+2.3 - 10/22/2020:
+
+	-Windows port revised.
+	-Windows bugs fixed.
+	-Documentation errors fixed.
+
 2.2 - 10/21/2020:
 
-  -Bugs fixed involving scales and resolutions in linux
-  -Documentation has been fixed
+	-Bugs fixed involving scales and resolutions in linux.
+	-Documentation has been fixed.
 
 2.1 - 10/17/2020:
 
-  -Some class names have been changed:
-    getTicks -> getTime().
-  -New functions added to Image class:
-    flip_x(bool flip);
-    flip_y(bool flip);
-  -Public access to some attributes of Image class
+	-Some class names have been changed:
+		getTicks -> getTime().
+	-New functions added to Image class:
+		flip_x(bool flip);
+		flip_y(bool flip);
+	-Public access to some attributes of Image class.
 
 2.0 - 10/17/2020:
 
-  -Tears Library now is avalible to Linux
-  -Added OpenGL API to draw graphics.
-  -Some class names have been changed:
-    Display -> TWindow.
-  -Added use of polymorphism functions(overload in C++) to a some TWindow and a Image functions.
-  -Added Raw Opengl context.
-  -Added BitMap font for OpenGL graphics.
-  -Some variables name have been changed:
-    key_* -> vk_* (exemple: vk_a, vk_escape, vk_0 ...)
-  -Some functions name have been changed:
-    setPenSize -> setLineSize
+	-Tears Library now is avalible to Linux.
+	-Added OpenGL API to draw graphics.
+	-Some class names have been changed:
+		Display -> TWindow.
+	-Added use of polymorphism functions(overload in C++) to a some TWindow and a Image functions.
+	-Added Raw Opengl context.
+	-Added BitMap font for OpenGL graphics.
+	-Some variables name have been changed:
+		key_* -> vk_* (exemple: vk_a, vk_escape, vk_0 ...)
+	-Some functions name have been changed:
+		setPenSize -> setLineSize
 
 1.1 - 06/26/2020:
 
-  -Some variables names have been changed.
+	-Some variables names have been changed.
 
 1.0 - 06/24/2020:
-  
-  -Released.
+	
+	-Released.
 
 */
 //Version notes (file end)
@@ -8100,7 +8111,7 @@ TWindow::TWindow(){
 	current_tick = (_ts.tv_sec*1000)+(_ts.tv_nsec/1.0e6);
 	last_tick = current_tick;
 	frame_time = current_tick - last_tick;
-  tl_init_time = _ts.tv_sec;
+	tl_init_time = _ts.tv_sec;
 	
 	int att[] = {GLX_RGBA,GLX_DEPTH_SIZE,24,GLX_DOUBLEBUFFER,1};
 	visualinfo = glXChooseVisual(display,0,att);
@@ -8114,15 +8125,15 @@ TWindow::TWindow(){
 	XMoveWindow(display,window,DESKTOP_RESOLUTION_X/2-width/2,DESKTOP_RESOLUTION_Y/2-height/2);
 	
 	XMapRaised(display,window);
-  XGrabPointer(display,window,True,0,GrabModeAsync,GrabModeAsync,window,0L,CurrentTime);
-  XGrabKeyboard(display,window,False,GrabModeAsync,GrabModeAsync,CurrentTime);
+	XGrabPointer(display,window,True,0,GrabModeAsync,GrabModeAsync,window,0L,CurrentTime);
+	XGrabKeyboard(display,window,False,GrabModeAsync,GrabModeAsync,CurrentTime);
 
 	XSizeHints sizehints;
-  sizehints.flags = PMinSize|PMaxSize;
-  sizehints.min_width = 800;
-  sizehints.min_height= 600;
-  sizehints.max_width = 800;
-  sizehints.max_height= 600;
+	sizehints.flags = PMinSize|PMaxSize;
+	sizehints.min_width = 800;
+	sizehints.min_height= 600;
+	sizehints.max_width = 800;
+	sizehints.max_height= 600;
 	XSetWMSizeHints(display,window,&sizehints,XA_WM_NORMAL_HINTS);
 	
 	conf = XRRGetScreenInfo(display, RootWindow(display,0));
@@ -8157,7 +8168,7 @@ TWindow::TWindow(const char* title){
 	current_tick = (_ts.tv_sec*1000)+(_ts.tv_nsec/1.0e6);
 	last_tick = current_tick;
 	frame_time = current_tick - last_tick;
-  tl_init_time = _ts.tv_sec;
+	tl_init_time = _ts.tv_sec;
 	
 	int att[] = {GLX_RGBA,GLX_DEPTH_SIZE,24,GLX_DOUBLEBUFFER,1};
 	visualinfo = glXChooseVisual(display,0,att);
@@ -8172,15 +8183,15 @@ TWindow::TWindow(const char* title){
 	XMoveWindow(display,window,DESKTOP_RESOLUTION_X/2-width/2,DESKTOP_RESOLUTION_Y/2-height/2);
 	
 	XMapRaised(display,window);
-  XGrabPointer(display,window,True,0,GrabModeAsync,GrabModeAsync,window,0L,CurrentTime);
-  XGrabKeyboard(display,window,False,GrabModeAsync,GrabModeAsync,CurrentTime);
+	XGrabPointer(display,window,True,0,GrabModeAsync,GrabModeAsync,window,0L,CurrentTime);
+	XGrabKeyboard(display,window,False,GrabModeAsync,GrabModeAsync,CurrentTime);
 
 	XSizeHints sizehints;
-  sizehints.flags = PMinSize|PMaxSize;
-  sizehints.min_width = 800;
-  sizehints.min_height= 600;
-  sizehints.max_width = 800;
-  sizehints.max_height= 600;
+	sizehints.flags = PMinSize|PMaxSize;
+	sizehints.min_width = 800;
+	sizehints.min_height= 600;
+	sizehints.max_width = 800;
+	sizehints.max_height= 600;
 	XSetWMSizeHints(display,window,&sizehints,XA_WM_NORMAL_HINTS);
 	
 	conf = XRRGetScreenInfo(display, RootWindow(display,0));
@@ -8215,7 +8226,7 @@ TWindow::TWindow(const char* title, int width, int height){
 	current_tick = (_ts.tv_sec*1000)+(_ts.tv_nsec/1.0e6);
 	last_tick = current_tick;
 	frame_time = current_tick - last_tick;
-  tl_init_time = _ts.tv_sec;
+	tl_init_time = _ts.tv_sec;
 	
 	int att[] = {GLX_RGBA,GLX_DEPTH_SIZE,24,GLX_DOUBLEBUFFER,1};
 	visualinfo = glXChooseVisual(display,0,att);
@@ -8230,15 +8241,15 @@ TWindow::TWindow(const char* title, int width, int height){
 	XMoveWindow(display,window,DESKTOP_RESOLUTION_X/2-width/2,DESKTOP_RESOLUTION_Y/2-height/2);
 	
 	XMapRaised(display,window);
-  XGrabPointer(display,window,True,0,GrabModeAsync,GrabModeAsync,window,0L,CurrentTime);
-  XGrabKeyboard(display,window,False,GrabModeAsync,GrabModeAsync,CurrentTime);
+	XGrabPointer(display,window,True,0,GrabModeAsync,GrabModeAsync,window,0L,CurrentTime);
+	XGrabKeyboard(display,window,False,GrabModeAsync,GrabModeAsync,CurrentTime);
 
 	XSizeHints sizehints;
-  sizehints.flags = PMinSize|PMaxSize;
-  sizehints.min_width = width;
-  sizehints.min_height= height;
-  sizehints.max_width = width;
-  sizehints.max_height= height;
+	sizehints.flags = PMinSize|PMaxSize;
+	sizehints.min_width = width;
+	sizehints.min_height= height;
+	sizehints.max_width = width;
+	sizehints.max_height= height;
 	XSetWMSizeHints(display,window,&sizehints,XA_WM_NORMAL_HINTS);
 	
 	conf = XRRGetScreenInfo(display, RootWindow(display,0));
@@ -8275,7 +8286,7 @@ TWindow::TWindow(const char* title, int width, int height, bool fullscreen){
 	current_tick = (_ts.tv_sec*1000)+(_ts.tv_nsec/1.0e6);
 	last_tick = current_tick;
 	frame_time = current_tick - last_tick;
-  tl_init_time = _ts.tv_sec;
+	tl_init_time = _ts.tv_sec;
 	
 	int att[] = {GLX_RGBA,GLX_DEPTH_SIZE,24,GLX_DOUBLEBUFFER,1};
 	visualinfo = glXChooseVisual(display,0,att);
@@ -8290,15 +8301,15 @@ TWindow::TWindow(const char* title, int width, int height, bool fullscreen){
 	XMoveWindow(display,window,DESKTOP_RESOLUTION_X/2-width/2,DESKTOP_RESOLUTION_Y/2-height/2);
 	
 	XMapRaised(display,window);
-  XGrabPointer(display,window,True,0,GrabModeAsync,GrabModeAsync,window,0L,CurrentTime);
-  XGrabKeyboard(display,window,False,GrabModeAsync,GrabModeAsync,CurrentTime);
+	XGrabPointer(display,window,True,0,GrabModeAsync,GrabModeAsync,window,0L,CurrentTime);
+	XGrabKeyboard(display,window,False,GrabModeAsync,GrabModeAsync,CurrentTime);
 
 	XSizeHints sizehints;
-  sizehints.flags = PMinSize|PMaxSize;
-  sizehints.min_width = width;
-  sizehints.min_height= height;
-  sizehints.max_width = width;
-  sizehints.max_height= height;
+	sizehints.flags = PMinSize|PMaxSize;
+	sizehints.min_width = width;
+	sizehints.min_height= height;
+	sizehints.max_width = width;
+	sizehints.max_height= height;
 	XSetWMSizeHints(display,window,&sizehints,XA_WM_NORMAL_HINTS);
 	
 	conf = XRRGetScreenInfo(display, RootWindow(display,0));
@@ -8363,7 +8374,7 @@ TWindow::TWindow(const char* title, int width, int height, bool fullscreen, bool
 	current_tick = (_ts.tv_sec*1000)+(_ts.tv_nsec/1.0e6);
 	last_tick = current_tick;
 	frame_time = current_tick - last_tick;
-  tl_init_time = _ts.tv_sec;
+	tl_init_time = _ts.tv_sec;
 	
 	int att[] = {GLX_RGBA,GLX_DEPTH_SIZE,24,GLX_DOUBLEBUFFER,1};
 	visualinfo = glXChooseVisual(display,0,att);
@@ -8736,10 +8747,10 @@ void TWindow::shutdown(){
 	tl_is_display_active = false;
 	if(this->fullscreen)setFullscreen(false);
 	glXMakeCurrent(display,0,0);
-  XUnmapWindow(display,window);
+	XUnmapWindow(display,window);
 	XDestroyWindow(display,window);
-  //For some reason, this function causes crash:
-  //XCloseDisplay(display);
+	//For some reason, this function causes crash:
+	//XCloseDisplay(display);
 }
 void TWindow::show(){
 
@@ -8788,8 +8799,8 @@ void TWindow::show(){
 double getTime(){
 	struct timespec ts;
 	clock_gettime(CLOCK_REALTIME,&ts);
-	//return (ts.tv_sec*1000)+(ts.tv_nsec/1.0e6);
-  return (((ts.tv_sec-tl_init_time)*1000.0f)+ts.tv_nsec/1.0e6)/1000;
+	//return (ts.tv_sec*1000)+(ts.tv_nsec/1.0e6); //This not work a better form
+	return (((ts.tv_sec-tl_init_time)*1000.0f)+ts.tv_nsec/1.0e6)/1000;
 }
 
 #if defined TL_USE_OPENGL
@@ -8814,8 +8825,8 @@ public:
 	void setOrigin(int x, int y);
 	void setAlpha(int a);
 	void setColor(int r, int g, int b);
-  void flip_x(bool flip);
-  void flip_y(bool flip);
+	void flip_x(bool flip);
+	void flip_y(bool flip);
 	void draw();
 	void draw(float a);
 	void draw(int x, int y);
@@ -8826,9 +8837,9 @@ public:
 	float crop_x = 0, crop_y = 0, crop_w = 0, crop_h = 0;
 	int origin_x = 0, origin_y = 0;
 	int image_width = 0, image_height = 0;
-  bool flipped_x = 0, flipped_y = 0;
-  int color_r = 255, color_g = 255, color_b = 255;
-  int alpha = 255;
+	bool flipped_x = 0, flipped_y = 0;
+	int color_r = 255, color_g = 255, color_b = 255;
+	int alpha = 255;
 	
 private:
 
@@ -8903,11 +8914,11 @@ void Image::draw(){
 
 	glLoadIdentity();
 	glTranslatef(x,y,0.0);
-  if(flipped_x)
-    glScalef(-1.0,1.0,1.0);
-  if(flipped_y)
-    glScalef(1.0,-1.0,1.0);
-  glScalef(scale_x,scale_y,0.0);
+	if(flipped_x)
+		glScalef(-1.0,1.0,1.0);
+	if(flipped_y)
+		glScalef(1.0,-1.0,1.0);
+	glScalef(scale_x,scale_y,0.0);
 	glRotatef(a,0.0,0.0,1.0);
 	glBindTexture(GL_TEXTURE_2D,texture);
 	glColor4f(color_r,color_g,color_b,alpha);
@@ -8929,10 +8940,10 @@ void Image::draw(float a){
 
 	glLoadIdentity();
 	glTranslatef(x,y,0.0);
-  if(flipped_x)
-    glScalef(-1.0,1.0,1.0);
-  if(flipped_y)
-    glScalef(1.0,-1.0,1.0);
+	if(flipped_x)
+		glScalef(-1.0,1.0,1.0);
+	if(flipped_y)
+		glScalef(1.0,-1.0,1.0);
 	glScalef(scale_x,scale_y,0.0);
 	glRotatef(a,0.0,0.0,1.0);
 	glBindTexture(GL_TEXTURE_2D,texture);
@@ -8955,10 +8966,10 @@ void Image::draw(int x, int y){
 
 	glLoadIdentity();
 	glTranslatef(x,y,0.0);
-  if(flipped_x)
-    glScalef(-1.0,1.0,1.0);
-  if(flipped_y)
-    glScalef(1.0,-1.0,1.0);
+	if(flipped_x)
+		glScalef(-1.0,1.0,1.0);
+	if(flipped_y)
+		glScalef(1.0,-1.0,1.0);
 	glScalef(scale_x,scale_y,0.0);
 	glRotatef(a,0.0,0.0,1.0);
 	glBindTexture(GL_TEXTURE_2D,texture);
@@ -8981,10 +8992,10 @@ void Image::draw(int x, int y, int w, int h){
 
 	glLoadIdentity();
 	glTranslatef(x,y,0.0);
-  if(flipped_x)
-    glScalef(-1.0,1.0,1.0);
-  if(flipped_y)
-    glScalef(1.0,-1.0,1.0);
+	if(flipped_x)
+		glScalef(-1.0,1.0,1.0);
+	if(flipped_y)
+		glScalef(1.0,-1.0,1.0);
 	glScalef(scale_x,scale_y,0.0);
 	glRotatef(a,0.0,0.0,1.0);
 	glBindTexture(GL_TEXTURE_2D,texture);
@@ -9007,10 +9018,10 @@ void Image::draw(int x, int y, int w, int h, float a){
 
 	glLoadIdentity();
 	glTranslatef(x,y,0.0);
-  if(flipped_x)
-    glScalef(-1.0,1.0,1.0);
-  if(flipped_y)
-    glScalef(1.0,-1.0,1.0);
+	if(flipped_x)
+		glScalef(-1.0,1.0,1.0);
+	if(flipped_y)
+		glScalef(1.0,-1.0,1.0);
 	glScalef(scale_x,scale_y,0.0);
 	glRotatef(a,0.0,0.0,1.0);
 	glBindTexture(GL_TEXTURE_2D,texture);
@@ -9286,7 +9297,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd,UINT msg,WPARAM wparam,LPARAM lparam){
 			tl_window_sized = true;
 		break;
 		
-		case WM_vkDOWN:
+		case WM_KEYDOWN:
 			if(wparam == 'Q')vk_q = true;
 			if(wparam == 'W')vk_w = true;
 			if(wparam == 'E')vk_e = true;
@@ -9335,7 +9346,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd,UINT msg,WPARAM wparam,LPARAM lparam){
 			if(wparam == VK_SPACE)vk_space = true;
 		break;
 			
-		case WM_vkUP:
+		case WM_KEYUP:
 			if(wparam == 'Q')vk_q = false;
 			if(wparam == 'W')vk_w = false;
 			if(wparam == 'E')vk_e = false;
@@ -10196,6 +10207,8 @@ public:
 	void setOrigin(int x, int y);
 	void setAlpha(int a);
 	void setColor(int r, int g, int b);
+	void flip_x(bool flip);
+	void flip_y(bool flip);
 	void draw();
 	void draw(float a);
 	void draw(int x, int y);
@@ -10206,9 +10219,9 @@ public:
 	float crop_x = 0, crop_y = 0, crop_w = 0, crop_h = 0;
 	int origin_x = 0, origin_y = 0;
 	int image_width = 0, image_height = 0;
-  bool flipped_x = 0, flipped_y = 0;
-  int color_r = 255, color_g = 255, color_b = 255;
-  int alpha = 255;
+	bool flipped_x = 0, flipped_y = 0;
+	int color_r = 255, color_g = 255, color_b = 255;
+	int alpha = 255;
 	
 private:
 
@@ -10436,8 +10449,8 @@ void Image::draw(float a){
 	
 	#else
 	
-		glLoadIdentity();
-		glTranslatef(x,y,0.0);
+	glLoadIdentity();
+	glTranslatef(x,y,0.0);
     if(flipped_x)
       glScalef(-1.0,1.0,1.0);
     if(flipped_y)
@@ -10483,8 +10496,8 @@ void Image::draw(int x, int y){
 	
 	#else
 	
-		glLoadIdentity();
-		glTranslatef(x,y,0.0);
+	glLoadIdentity();
+	glTranslatef(x,y,0.0);
     if(flipped_x)
       glScalef(-1.0,1.0,1.0);
     if(flipped_y)
@@ -10530,8 +10543,8 @@ void Image::draw(int x, int y, int w, int h){
 	
 	#else
 	
-		glLoadIdentity();
-		glTranslatef(x,y,0.0);
+	glLoadIdentity();
+	glTranslatef(x,y,0.0);
     if(flipped_x)
       glScalef(-1.0,1.0,1.0);
     if(flipped_y)
@@ -10577,8 +10590,8 @@ void Image::draw(int x, int y, int w, int h, float a){
 	
 	#else
 	
-		glLoadIdentity();
-		glTranslatef(x,y,0.0);
+	glLoadIdentity();
+	glTranslatef(x,y,0.0);
     if(flipped_x)
       glScalef(-1.0,1.0,1.0);
     if(flipped_y)
