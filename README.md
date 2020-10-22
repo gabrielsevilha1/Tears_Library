@@ -12,7 +12,7 @@ For compile in Linux: -lX11 -lXrandr -lGL
 Exemple:<br/>
 #include"tears_library.h"<br/>
 int main(){<br/>
-<t/>TWindow w;<br/>
+TWindow w;<br/>
     while(!vk_escape){<br/>
         w.show();<br/>
     }<br/>
