@@ -10,12 +10,12 @@ For compile in Windows: -lopengl32 -lgdi32 -lgdiplus <br/>
 For compile in Linux: -lX11 -lXrandr -lGL
 
 Exemple:<br/>
-<tab>#include"tears_library.h"<br/>
-int main(){<br/>
-TWindow w;<br/>
-    while(!vk_escape){<br/>
-        w.show();<br/>
-    }<br/>
-}<br/>
+```#include"tears_library.h"
+int main(){
+TWindow w;
+    while(!vk_escape){
+        w.show();
+    }
+}´´´
 
 ***by: Gabriel Sevilha <3***
