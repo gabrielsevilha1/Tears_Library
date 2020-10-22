@@ -19,9 +19,7 @@ int main(){
     }
     w.shutdown();
 }
-```
 
-```C++
 #include"tears_library.h"
 int main(){
     TWindow w("window name",800,600);
@@ -32,6 +30,6 @@ int main(){
     }
     w.shutdown();
 }
-´´´
+```
 
 ***by: Gabriel Sevilha <3***
