@@ -6,26 +6,26 @@ Project first release: 06/24/2020
 
 Description:
 
-		Tears Library is a graphics library write in C/C++ to help write applications
-	without worrying with a low level api, so you can dedicate for your project development,
-	accelerating you development.
+    Tears Library is a graphics library write in C/C++ to help write applications
+  without worrying with a low level api, so you can dedicate for your project development,
+  accelerating you development.
 
 Read:
 
-    	Tears Library is a unique header graphics library designed to facilitate prototyping, simulations,
-	testing and game development. Initially, Tears used GDI+ to draw on the screen, because of that,
-	unfortunately it was developed to be compiled only in C++, and cannot be used from pure C.
-	Due to the low performance of GDI+, Tears gains an OpenGL context, in which it can be used in pure
-	form (for use with modern OpenGL) or to be used by the Tears Library for graphic draw.
-	Tears offers several 2D drawing functions, and a library can be used for 3D development using the pure context of OpenGL,
-	however the library itself does not yet include support for 3D development, and there are no plans for future implementation, although it does not discard the idea.
-	Tears Library was inspired by the graphics2d module in java, but also in many high-level language libraries.
+      Tears Library is a unique header graphics library designed to facilitate prototyping, simulations,
+  testing and game development. Initially, Tears used GDI+ to draw on the screen, because of that,
+  unfortunately it was developed to be compiled only in C++, and cannot be used from pure C.
+  Due to the low performance of GDI+, Tears gains an OpenGL context, in which it can be used in pure
+  form (for use with modern OpenGL) or to be used by the Tears Library for graphic draw.
+  Tears offers several 2D drawing functions, and a library can be used for 3D development using the pure context of OpenGL,
+  however the library itself does not yet include support for 3D development, and there are no plans for future implementation, although it does not discard the idea.
+  Tears Library was inspired by the graphics2d module of java, but also in many high-level language libraries.
 
-	This library was developed by me (Gabriel Sevilha), and i like it a lot, please respect it!
+  This library was developed by me (Gabriel Sevilha), and i like it a lot, please respect it! S2
 
 Dependences:
 
-	stb_image.h (Already comes integrated with Tears Library to facilitate use) (LICENSE has included in code too)
+  stb_image.h (Already comes integrated with Tears Library to facilitate use) (LICENSE has included in code too)
 
 ============================================== Tears Library Manual ==============================================
 
@@ -36,7 +36,7 @@ Attention:
   -This library is boring, depending of what render api you use, some functions have be rewrite.
   -Do not use GDI+ anymore, OpenGL comes for standard now.
   
-  -The Tears library's intention has always been to be a library without extern dependencies,
+  -The Tears Library intention has always been to be a library without extern dependencies,
   because of that, the use of OpenGL will use bitmap images (".png", ".bpm", ".jpg",...)
   to write texts on the screen. For now there is no use of a library for reading ".ttf" files,
   and even if Tears later gain the use of freetype, this dependency will be completely optional.
@@ -47,18 +47,20 @@ Tears Library References:
   
     For compile in Windows:
       if use GDI+,link librarys:      -lgdi32 -lgdiplus
-      if use OPENGL, link librarys:   -lopengl32
+      if use OPENGL, link librarys:   -lopengl32 -lgdi32
       
     For compile in Linux:
       link librarys:                  -lX11 -lXrandr -lGL
     
   Define configure:
 
-    USE_OPENGL        (Tears OpenGL render)
-    USE_OPENGL_CONTEXT    (Raw OpenGL Context)
-    USE_GDIPLUS       (Tears GDI+ render(only windows))(Not recommended)
+    //These need called before a: #include"tears_library.h"
 
-    FIX_BORDER        (Show client area ignoring a border size)(for now, only avalible in Windows, but not recomend that you use it)
+    USE_OPENGL          (Tears OpenGL render)
+    USE_OPENGL_CONTEXT  (Raw OpenGL Context)
+    USE_GDIPLUS         (Tears GDI+ render(only windows))(Not recommended)
+
+    FIX_BORDER          (Show client area ignoring a border size)(for now, only avalible in Windows, but not recomend that you use it)
     
   Global variables:
   
@@ -82,89 +84,89 @@ Tears Library References:
     //Is format parameter for loadFont()
     REGULAR 0   (only avalible with window and GDI+)
     BOLD 1      (only avalible with window and GDI+)
-    ITALIC 2  (only avalible with window and GDI+)
+    ITALIC 2    (only avalible with window and GDI+)
 
-	Classes:
-	
-		TWindow:
-		
-			TWindow();
-			TWindow(const char* title);
-			TWindow(const char* title,int width,int height);
-			TWindow(const char* title,int width,int height,bool fullscreen);
-			TWindow(const char* title,int width,int height,bool fullscreen,bool vsync);
-			void show();
-			void shutdown();
-			void setSize(int w, int h);
-			void setViewSize(int w, int h);
-			void setFullscreen(bool fullscreen);
-			void setVsync(bool enable);
-			void setTitle(const char* title);
-			void setIcon(const char* file);				(for now, only in Windows)
-			void setSmallIconSize(int w, int h);		(only in Windows)
-			void setBigIconSize(int w, int h);			(only in Windows)
-			void setResizable(bool enable);
-			void setCursor(const char* file);
-			void showCursor(bool enable);
-			void setFixedViewScale(bool enable);
-			void setBorderless(bool enable);
-			
-			int width,height;
-			int view_width,view_height;
-			
-			HWND hwnd;
-			
-		Image:
-		
-			Image(const char* file);
-			void setPosition(int x, int y);
-			void setScale(int x, int y);
-			void setSize(int w, int h);
-			void setCropPosition(int crop_x, int crop_y);
-			void setCropSize(int crop_w, int crop_h);
-			void setOrigin(int x, int y);
-			void setAlpha(int a);
-			void setColor(int r, int g, int b);
-			void flip_x(bool flip);
-			void flip_y(bool flip);
-			void draw();
-			void draw(float a);
-			void draw(int x, int y);
-			void draw(int x, int y, int w, int h);
-			void draw(int x, int y, int w, int h, float a);
-			
-			bool cached = false; (Only in Windows with GDI+, use with wisdom!)
-			
-			float x = 0, y = 0, w = 0, h = 0, scale_x = 1, scale_y = 1, a = 0;
-			float crop_x = 0, crop_y = 0, crop_w = 0, crop_h = 0;
-			int origin_x = 0, origin_y = 0;
-			int image_width = 0, image_height = 0;
-			bool flipped_x = 0, flipped_y = 0;
-			int color_r = 255, color_g = 255, color_b = 255, alpha = 255;
+  Classes:
+  
+    TWindow:
+    
+      TWindow();
+      TWindow(const char* title);
+      TWindow(const char* title,int width,int height);
+      TWindow(const char* title,int width,int height,bool fullscreen);
+      TWindow(const char* title,int width,int height,bool fullscreen,bool vsync);
+      void show();
+      void shutdown();
+      void setSize(int w, int h);
+      void setViewSize(int w, int h);
+      void setFullscreen(bool fullscreen);
+      void setVsync(bool enable);
+      void setTitle(const char* title);
+      void setIcon(const char* file);       (for now, only in Windows)
+      void setSmallIconSize(int w, int h);    (only in Windows)
+      void setBigIconSize(int w, int h);      (only in Windows)
+      void setResizable(bool enable);
+      void setCursor(const char* file);
+      void showCursor(bool enable);
+      void setFixedViewScale(bool enable);
+      void setBorderless(bool enable);
+      
+      int width,height;
+      int view_width,view_height;
+      
+      HWND hwnd;
+      
+    Image:
+    
+      Image(const char* file);
+      void setPosition(int x, int y);
+      void setScale(int x, int y);
+      void setSize(int w, int h);
+      void setCropPosition(int crop_x, int crop_y);
+      void setCropSize(int crop_w, int crop_h);
+      void setOrigin(int x, int y);
+      void setAlpha(int a);
+      void setColor(int r, int g, int b);
+      void flip_x(bool flip);
+      void flip_y(bool flip);
+      void draw();
+      void draw(float a);
+      void draw(int x, int y);
+      void draw(int x, int y, int w, int h);
+      void draw(int x, int y, int w, int h, float a);
+      
+      bool cached = false; (Only in Windows with GDI+, use with wisdom!)
+      
+      float x = 0, y = 0, w = 0, h = 0, scale_x = 1, scale_y = 1, a = 0;
+      float crop_x = 0, crop_y = 0, crop_w = 0, crop_h = 0;
+      int origin_x = 0, origin_y = 0;
+      int image_width = 0, image_height = 0;
+      bool flipped_x = 0, flipped_y = 0;
+      int color_r = 255, color_g = 255, color_b = 255, alpha = 255;
 
-	Functions:
-		
-		//Only avalible in opengl draw mode:
-		setEllipseSides(num_sides);
-		
-		//All follow functions depends of TWindow class:
-		double getTime();
-		void loadFont(const char* font, int size, int format);
-		void resetMatrix();
-		void translate(float x, float y);
-		void rotate(float a);
-		void scale(float x, float y);
-		void drawText(const char* text,int x, int y);
-		void setColor(int r, int g, int b);
-		void setLineSize(int size);
-		void fillRect(int x, int y, int w, int h);
-		void fillEllipse(int x, int y, int r);
-		void fillPolygon(int point[], int points_count);
-		void drawPixel(int x, int y);
-		void drawRect(int x, int y, int w, int h);
-		void drawEllipse(int x, int y, int r);
-		void drawLine(int x, int y, int final_x, int final_y);
-		void drawPolygon(int point[], int points_count);
+  Functions:
+    
+    //Only avalible in opengl draw mode:
+    setEllipseSides(num_sides);
+    
+    //All follow functions depends of TWindow class:
+    double getTime();
+    void loadFont(const char* font, int size, int format);
+    void resetMatrix();
+    void translate(float x, float y);
+    void rotate(float a);
+    void scale(float x, float y);
+    void drawText(const char* text,int x, int y);
+    void setColor(int r, int g, int b);
+    void setLineSize(int size);
+    void fillRect(int x, int y, int w, int h);
+    void fillEllipse(int x, int y, int r);
+    void fillPolygon(int point[], int points_count);
+    void drawPixel(int x, int y);
+    void drawRect(int x, int y, int w, int h);
+    void drawEllipse(int x, int y, int r);
+    void drawLine(int x, int y, int final_x, int final_y);
+    void drawPolygon(int point[], int points_count);
 
 Program exemple:
 
@@ -175,59 +177,59 @@ Program exemple:
 #include"tears_library.h"
 
 int main(){
-	
-	//Create window
-	TWindow w("Tears",800,600);
-	
-	//Set window resizable
-	w.setResizable(true);
-	
-	//Set window size
-	w.setSize(800,600);
-	
-	//Set window fullscreen
-	w.setFullscreen(true);
-	
-	//Set window borderless
-	w.setBorderless(true);
-	
-	//Set cursor images
-	w.setCursor("cusor.ico");
-	
-	//Set window icon image (For now, only in Windows)
-	//w.setIcon("icon.ico");
-	
-	//Set small window icon size (Only in Windows)
-	//w.setSmallIconSize(32,32);
-	
-	//Set big window icon size (Only in Windows)
-	//w.setBigIconSize(128,128);
-	
-	//Enable vsync (fix fps in 60)
-	w.setVsync(true);
-	
-	//Set window title
-	w.setTitle("title");
-	
-	//Set view size (this is one of a main features of Tears Library :) )
-	w.setViewSize(800,600);
-	
-	//this will make resolution not changes if a window is resizable (this is one of a main features of Tears Library :) )
-	w.setFixedViewScale(true);
-	
-	//Show or hide cursor
-	w.showCursor(true);
-	
-	while(true){
-		
-		//Update window and swap buffers (Need aways call this method)
-		t.show();
-		
-	}
-	
-	//Close TWindow
-	w.shutdown();
-	
+  
+  //Create window
+  TWindow w("Tears",800,600);
+  
+  //Set window resizable
+  w.setResizable(true);
+  
+  //Set window size
+  w.setSize(800,600);
+  
+  //Set window fullscreen
+  w.setFullscreen(true);
+  
+  //Set window borderless
+  w.setBorderless(true);
+  
+  //Set cursor images
+  w.setCursor("cusor.ico");
+  
+  //Set window icon image (For now, only in Windows)
+  //w.setIcon("icon.ico");
+  
+  //Set small window icon size (Only in Windows)
+  //w.setSmallIconSize(32,32);
+  
+  //Set big window icon size (Only in Windows)
+  //w.setBigIconSize(128,128);
+  
+  //Enable vsync (fix fps in 60)
+  w.setVsync(true);
+  
+  //Set window title
+  w.setTitle("title");
+  
+  //Set view size (this is one of a main features of Tears Library :) )
+  w.setViewSize(800,600);
+  
+  //this will make resolution not changes if a window is resizable (this is one of a main features of Tears Library :) )
+  w.setFixedViewScale(true);
+  
+  //Show or hide cursor
+  w.showCursor(true);
+  
+  while(true){
+    
+    //Update window and swap buffers (Need aways call this method)
+    t.show();
+    
+  }
+  
+  //Close TWindow
+  w.shutdown();
+  
 }
 
 //Use image==========================================================================================
@@ -235,42 +237,42 @@ int main(){
 #include"tears_library.h"
 
 int main(){
-	
-	TWindow w("Tears",800,600);
-	
-	//Instantiate a image
-	Image i("Girl.png");
-	
-	//Set image position
-	i.setPosition(d.width/2-i.w/2,d.height/2-i.h/2);
-	
-	//Set origin point of image
-	i.setOrigin(i.w/2,i.h/2);
-	
-	//Set scale of image
-	i.setScale(8,8);
-	
-	//Set alpha of image
-	i.setAlpha(255);
-	
-	//Set color of image
-	i.setColor(255,255,255);
-	
-	//Set crop position
-	i.setCropPosition(0,0);
-	
-	//Set crop size
-	i.setCropSize(32,32);
-	
-	while(true){
-		
-		//Draw image
-		i.draw();
-		
-		w.show();
-		
-	}
-	
+  
+  TWindow w("Tears",800,600);
+  
+  //Instantiate a image
+  Image i("Girl.png");
+  
+  //Set image position
+  i.setPosition(d.width/2-i.w/2,d.height/2-i.h/2);
+  
+  //Set origin point of image
+  i.setOrigin(i.w/2,i.h/2);
+  
+  //Set scale of image
+  i.setScale(8,8);
+  
+  //Set alpha of image
+  i.setAlpha(255);
+  
+  //Set color of image
+  i.setColor(255,255,255);
+  
+  //Set crop position
+  i.setCropPosition(0,0);
+  
+  //Set crop size
+  i.setCropSize(32,32);
+  
+  while(true){
+    
+    //Draw image
+    i.draw();
+    
+    w.show();
+    
+  }
+  
 }
 
 //Drawing============================================================================================
@@ -278,40 +280,40 @@ int main(){
 #include"tears_library.h"
 
 int main(){
-	
-	TWindow w("Tears",800,600);
-	
-	while(true){
-		
-		//Set color of your nexts draws;
-		setColor(0,0,255);
-		
-		//Fill rectangle in position 100,100 with size of 50,50
-		fillRect(100,100,50,50);
-		
-		//Set pen line size
-		setLineSize(4);
-		
-		//Draw rectangle in position 100,100 with size of 50,50
-		drawRect(20,20,760,560);
-		
-		//Draw a single pixel
-		drawPixel(10,10);
-		
-		//Polygon
-		//Specify a vertex array, with x, and y
-		int point[] = {
-		//	 x   y
-			400,100,
-			100,500,
-			700,500
-		};
-		fillPolygon(point,3);
-		
-		w.show();
-		
-	}
-	
+  
+  TWindow w("Tears",800,600);
+  
+  while(true){
+    
+    //Set color of your nexts draws;
+    setColor(0,0,255);
+    
+    //Fill rectangle in position 100,100 with size of 50,50
+    fillRect(100,100,50,50);
+    
+    //Set pen line size
+    setLineSize(4);
+    
+    //Draw rectangle in position 100,100 with size of 50,50
+    drawRect(20,20,760,560);
+    
+    //Draw a single pixel
+    drawPixel(10,10);
+    
+    //Polygon
+    //Specify a vertex array, with x, and y
+    int point[] = {
+    //   x   y
+      400,100,
+      100,500,
+      700,500
+    };
+    fillPolygon(point,3);
+    
+    w.show();
+    
+  }
+  
 }
 
 //Text===============================================================================================
@@ -319,22 +321,22 @@ int main(){
 #include"tears_library.h"
 
 int main(){
-	
-	TWindow w;
-	
-	loadFont("BitmapFont.png",16,16);
-	
-	while(!key_escape){
-	
-		setColor(255,255,255);
-		drawText("Hello, World!",0,0);
-		
-		w.show();
-		
-	}
-	
-	w.shutdown();
-	
+  
+  TWindow w;
+  
+  loadFont("BitmapFont.png",16,16);
+  
+  while(!key_escape){
+  
+    setColor(255,255,255);
+    drawText("Hello, World!",0,0);
+    
+    w.show();
+    
+  }
+  
+  w.shutdown();
+  
 }
 
 //End of documentation <3
