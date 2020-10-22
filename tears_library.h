@@ -18,7 +18,7 @@ freely, subject to the following restrictions:
 3. This notice may not be removed or altered from any source distribution.
 */
 
-//Tears Library
+//Tears Library 2.3
 //Created by Gabriel Sevilha ♥
 
 //First release: 06/24/2020
@@ -46,7 +46,7 @@ freely, subject to the following restrictions:
 //Documentaion (file begin)
 /*
 
-Tears Library.
+Tears Library 2.3
 Created by: Gabriel Sevilha <3
 
 Project init: 06/15/2020
@@ -438,6 +438,7 @@ int main(){
 1.0 - 06/24/2020:
 	
 	-Released.
+
 
 */
 //Version notes (file end)
