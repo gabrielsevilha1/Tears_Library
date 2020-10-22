@@ -35,15 +35,8 @@ freely, subject to the following restrictions:
 //Define configure:
 //
 //		USE_OPENGL				 (Tears OpenGL render)
-//		USE_OPENGL_CONTEXT (Raw OpenGL Context)
+//		USE_OPENGL_CONTEXT 		 (Raw OpenGL Context)
 //		USE_GDIPLUS			 	 (Tears GDI+ render(only windows))(Not recommended)
-//
-
-//
-//Attention:
-//
-//    This library is open source, and has its dependencies, these dependencies have been added internally for easy use, without the user having to download each of the dependencies manually.
-//    Your unique dependence for now is stb_image.h, that has included in this code to facilitate use of library
 //
 
 //(Read documentation for more information)
@@ -59,26 +52,26 @@ Project first release: 06/24/2020
 
 Description:
 
-    Tears Library is a graphics library write in C/C++ to help write applications
-  without worrying with a low level api, so you can dedicate for your project development,
-  accelerating you development.
+		Tears Library is a graphics library write in C/C++ to help write applications
+	without worrying with a low level api, so you can dedicate for your project development,
+	accelerating you development.
 
 Read:
 
-    Tears Library is a unique header graphics library designed to facilitate prototyping, simulations,
-  testing and game development. Initially, Tears used GDI+ to draw on the screen, because of that,
-  unfortunately it was developed to be compiled only in C++, and cannot be used from pure C.
-  Due to the low performance of GDI+, Tears gains an OpenGL context, in which it can be used in pure
-  form(for use with modern OpenGL) or to be used by the Tears Library for graphic design.
-  Tears offers several 2D drawing functions, and can be used for 3D development using the pure context of OpenGL,
-  however the library itself does not yet include support for 3D development, and there are no plans for future implementation, although it does not discard the idea.
-  Tears Library was inspired by the graphics2d module in java, but also in many high-level language libraries.
-  
-  This library was developed by me (Gabriel Sevilha), and i like it a lot, please respect it!
-  
+    	Tears Library is a unique header graphics library designed to facilitate prototyping, simulations,
+	testing and game development. Initially, Tears used GDI+ to draw on the screen, because of that,
+	unfortunately it was developed to be compiled only in C++, and cannot be used from pure C.
+	Due to the low performance of GDI+, Tears gains an OpenGL context, in which it can be used in pure
+	form (for use with modern OpenGL) or to be used by the Tears Library for graphic draw.
+	Tears offers several 2D drawing functions, and a library can be used for 3D development using the pure context of OpenGL,
+	however the library itself does not yet include support for 3D development, and there are no plans for future implementation, although it does not discard the idea.
+	Tears Library was inspired by the graphics2d module in java, but also in many high-level language libraries.
+
+	This library was developed by me (Gabriel Sevilha), and i like it a lot, please respect it!
+
 Dependences:
-  
-  stb_image.h (Already comes integrated with Tears Library) (LICENSE has included in code too)
+
+	stb_image.h (Already comes integrated with Tears Library to facilitate use) (LICENSE has included in code too)
 
 ============================================== Tears Library Manual ==============================================
 
