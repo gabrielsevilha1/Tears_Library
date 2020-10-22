@@ -6,7 +6,7 @@
 -Linux and Windows.<br/>
 -C++.<br/>
 
-For compile in Windows: -lopengl32 -lgdi32 -lgdiplus
+For compile in Windows: -lopengl32 -lgdi32 -lgdiplus <br/>
 For compile in Linux: -lX11 -lXrandr -lGL
 
 Exemple:<br/>
