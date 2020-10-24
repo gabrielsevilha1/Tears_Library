@@ -18,7 +18,7 @@ freely, subject to the following restrictions:
 3. This notice may not be removed or altered from any source distribution.
 */
 
-//Tears Library 2.3
+//Tears Library 2.4
 //Created by Gabriel Sevilha ♥
 
 //First release: 06/24/2020
@@ -46,7 +46,7 @@ freely, subject to the following restrictions:
 //Documentaion (file begin)
 /*
 
-Tears Library 2.3
+Tears Library 2.4
 Created by: Gabriel Sevilha <3
 
 Project init: 06/15/2020
@@ -54,26 +54,26 @@ Project first release: 06/24/2020
 
 Description:
 
-		Tears Library is a graphics library write in C/C++ to help write applications
-	without worrying with a low level api, so you can dedicate for your project development,
-	accelerating you development.
+    Tears Library is a graphics library write in C/C++ to help write applications
+  without worrying with a low level api, so you can dedicate for your project development,
+  accelerating you development.
 
 Read:
 
-    	Tears Library is a unique header graphics library designed to facilitate prototyping, simulations,
-	testing and game development. Initially, Tears used GDI+ to draw on the screen, because of that,
-	unfortunately it was developed to be compiled only in C++, and cannot be used from pure C.
-	Due to the low performance of GDI+, Tears gains an OpenGL context, in which it can be used in pure
-	form (for use with modern OpenGL) or to be used by the Tears Library for graphic draw.
-	Tears offers several 2D drawing functions, and a library can be used for 3D development using the pure context of OpenGL,
-	however the library itself does not yet include support for 3D development, and there are no plans for future implementation, although it does not discard the idea.
-	Tears Library was inspired by the graphics2d module of java, but also in many high-level language libraries.
+      Tears Library is a unique header graphics library designed to facilitate prototyping, simulations,
+  testing and game development. Initially, Tears used GDI+ to draw on the screen, because of that,
+  unfortunately it was developed to be compiled only in C++, and cannot be used from pure C.
+  Due to the low performance of GDI+, Tears gains an OpenGL context, in which it can be used in pure
+  form (for use with modern OpenGL) or to be used by the Tears Library for graphic draw.
+  Tears offers several 2D drawing functions, and a library can be used for 3D development using the pure context of OpenGL,
+  however the library itself does not yet include support for 3D development, and there are no plans for future implementation, although it does not discard the idea.
+  Tears Library was inspired by the graphics2d module of java, but also in many high-level language libraries.
 
-	This library was developed by me (Gabriel Sevilha), and i like it a lot, please respect it! S2
+  This library was developed by me (Gabriel Sevilha), and i like it a lot, please respect it! S2
 
 Dependences:
 
-	stb_image.h (Already comes integrated with Tears Library to facilitate use) (LICENSE has included in code too)
+  stb_image.h (Already comes integrated with Tears Library to facilitate use) (LICENSE has included in code too)
 
 ============================================== Tears Library Manual ==============================================
 
@@ -124,8 +124,10 @@ Tears Library References:
     //Mouse input:
     bool left_click = 0, right_click = 0, middle_click = 0;
     
-    POINT mouse_position;      (has x and y) (in linux, it is not a POINT struct)
-    POINT mouse_position_view; (has x and y) (in linux, it is not a POINT struct)
+    POINT mouse_position;      (struct that has x and y) (in linux, it is not a POINT struct)
+    POINT mouse_position_view; (struct that has x and y) (in linux, it is not a POINT struct)
+    POINT mouse_motion;        (struct that has x and y) (in linux, it is not a POINT struct)
+    POINT mouse_motion_view;   (struct that has x and y) (in linux, it is not a POINT struct)
     
   Definitions:
   
@@ -396,48 +398,55 @@ int main(){
 //Version notes (file begin)
 /*
 
+2.4 - 10/24/2020:
+
+  -New input globals added:
+    mouse_motion.
+    mouse_motion_view.
+  -Windows Vsync work around excluded
+
 2.3 - 10/22/2020:
 
-	-Windows port revised.
-	-Windows bugs fixed.
-	-Windows vsync fixed.
-	-Documentation errors fixed.
+  -Windows port revised.
+  -Windows bugs fixed.
+  -Windows vsync fixed.
+  -Documentation errors fixed.
 
 2.2 - 10/21/2020:
 
-	-Bugs fixed involving scales and resolutions in linux.
-	-Documentation has been fixed.
+  -Bugs fixed involving scales and resolutions in linux.
+  -Documentation has been fixed.
 
 2.1 - 10/17/2020:
 
-	-Some class names have been changed:
-		getTicks -> getTime().
-	-New functions added to Image class:
-		flip_x(bool flip);
-		flip_y(bool flip);
-	-Public access to some attributes of Image class.
+  -Some class names have been changed:
+    getTicks -> getTime().
+  -New functions added to Image class:
+    flip_x(bool flip);
+    flip_y(bool flip);
+  -Public access to some attributes of Image class.
 
 2.0 - 10/17/2020:
 
-	-Tears Library now is avalible to Linux.
-	-Added OpenGL API to draw graphics.
-	-Some class names have been changed:
-		Display -> TWindow.
-	-Added use of polymorphism functions(overload in C++) to a some TWindow and a Image functions.
-	-Added Raw Opengl context.
-	-Added BitMap font for OpenGL graphics.
-	-Some variables name have been changed:
-		key_* -> vk_* (exemple: vk_a, vk_escape, vk_0 ...)
-	-Some functions name have been changed:
-		setPenSize -> setLineSize
+  -Tears Library now is avalible to Linux.
+  -Added OpenGL API to draw graphics.
+  -Some class names have been changed:
+    Display -> TWindow.
+  -Added use of polymorphism functions(overload in C++) to a some TWindow and a Image functions.
+  -Added Raw Opengl context.
+  -Added BitMap font for OpenGL graphics.
+  -Some variables name have been changed:
+    key_* -> vk_* (exemple: vk_a, vk_escape, vk_0 ...)
+  -Some functions name have been changed:
+    setPenSize -> setLineSize
 
 1.1 - 06/26/2020:
 
-	-Some variables names have been changed.
+  -Some variables names have been changed.
 
 1.0 - 06/24/2020:
-	
-	-Released.
+  
+  -Released.
 
 
 */
@@ -7862,6 +7871,12 @@ typedef struct{
 
 tl_point mouse_position;
 tl_point mouse_position_view;
+tl_point mouse_motion;
+tl_point mouse_motion_view;
+int tl_last_mouse_position_x = mouse_position.x;
+int tl_last_mouse_position_y = mouse_position.y;
+int tl_last_mouse_position_view_x = mouse_position_view.x;
+int tl_last_mouse_position_view_y = mouse_position_view.y;
 
 void tl_call_input(Display* display){
 	XEvent event;
@@ -8788,6 +8803,15 @@ void TWindow::show(){
 	tl_call_input(display);
 	mouse_position_view.x = (float)mouse_position.x/width*view_width;
 	mouse_position_view.y = (float)mouse_position.y/height*view_height;
+	mouse_motion_view.x = mouse_position.x - tl_last_mouse_position_view_x;
+	mouse_motion_view.y = mouse_position.y - tl_last_mouse_position_view_y;
+	tl_last_mouse_position_view_x = mouse_position_view.x;
+	tl_last_mouse_position_view_y = mouse_position_view.y;
+
+	mouse_motion.x = mouse_position.x - tl_last_mouse_position_x;
+	mouse_motion.y = mouse_position.y - tl_last_mouse_position_y;
+	tl_last_mouse_position_x = mouse_position.x;
+	tl_last_mouse_position_y = mouse_position.y;
 	
 	fps_counter++;
 	current_time = time(0);
@@ -9289,6 +9313,12 @@ bool left_click = 0, right_click = 0, middle_click = 0;
 
 POINT mouse_position;
 POINT mouse_position_view;
+POINT mouse_motion;
+POINT mouse_motion_view;
+int tl_last_mouse_position_x = mouse_position.x;
+int tl_last_mouse_position_y = mouse_position.y;
+int tl_last_mouse_position_view_x = mouse_position_view.x;
+int tl_last_mouse_position_view_y = mouse_position_view.y;
 
 LRESULT CALLBACK WindowProc(HWND hwnd,UINT msg,WPARAM wparam,LPARAM lparam){
 	
@@ -10153,6 +10183,17 @@ void TWindow::show(){
 			tl_window_sized = false;
 		}
 	}
+
+	mouse_motion_view.x = mouse_position.x - tl_last_mouse_position_view_x;
+	mouse_motion_view.y = mouse_position.y - tl_last_mouse_position_view_y;
+	tl_last_mouse_position_view_x = mouse_position_view.x;
+	tl_last_mouse_position_view_y = mouse_position_view.y;
+
+	mouse_motion.x = mouse_position.x - tl_last_mouse_position_x;
+	mouse_motion.y = mouse_position.y - tl_last_mouse_position_y;
+	tl_last_mouse_position_x = mouse_position.x;
+	tl_last_mouse_position_y = mouse_position.y;
+		
 	if(msg.message == WM_QUIT){
 		exit(0);
 	}
@@ -10169,21 +10210,8 @@ void TWindow::show(){
 	current_time = time(0);
 	if(current_time - last_time > 0){
 		fps = fps_conter;
-		//This is bad i know ;-;
-		//--Mark for devs-- Remove this after:
-		if(vsync && fps > 60 && fps < 70)
-			fps = 60;
 		last_time = current_time;
 		fps_conter = 0;
-	}
-	//--Mark for devs-- Fix Vsync:
-	if(vsync){
-		frame_time = GetTickCount() - current_tick;
-		current_tick = GetTickCount();
-		if(16 > frame_time){
-			Sleep(16 - frame_time);
-			last_tick = current_tick;
-		}
 	}
 	
 }

@@ -1,4 +1,4 @@
-Tears Library 2.3
+Tears Library 2.4
 Created by: Gabriel Sevilha <3
 
 Project init: 06/15/2020
@@ -76,8 +76,10 @@ Tears Library References:
     //Mouse input:
     bool left_click = 0, right_click = 0, middle_click = 0;
     
-    POINT mouse_position;      (has x and y) (in linux, it is not a POINT struct)
-    POINT mouse_position_view; (has x and y) (in linux, it is not a POINT struct)
+    POINT mouse_position;      (struct that has x and y) (in linux, it is not a POINT struct)
+    POINT mouse_position_view; (struct that has x and y) (in linux, it is not a POINT struct)
+    POINT mouse_motion;        (struct that has x and y) (in linux, it is not a POINT struct)
+    POINT mouse_motion_view;   (struct that has x and y) (in linux, it is not a POINT struct)
     
   Definitions:
   
