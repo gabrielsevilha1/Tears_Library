@@ -1,5 +1,7 @@
 # Tears_Library ![alt_text](/TearsLibraryIcon.png)
 
+C++ Graphics Library
+
 -Unique header library.<br/>
 -Quick to use.<br/>
 -Open Source (zlib).<br/>
