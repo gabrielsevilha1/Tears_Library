@@ -1,6 +1,6 @@
 # Tears_Library ![alt_text](/TearsLibraryIcon.png) <br/>
 
-C++ 2D Graphics unique header library <br/>
+C++ 2D Graphics Unique Header Library. <br/>
 
 -Unique header library.<br/>
 -Quick to use.<br/>
