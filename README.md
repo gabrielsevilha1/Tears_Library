@@ -1,9 +1,10 @@
 # Tears_Library ![alt_text](/TearsLibraryIcon.png) <br/>
 
-C++ 2D Graphics Unique Header Library. <br/>
+C++ Graphics Library. <br/>
 
 -Unique header library.<br/>
 -Quick to use.<br/>
+-3D with raw OpenGL context. <br/>
 -Open Source (zlib).<br/>
 -Linux and Windows.<br/>
 -C++.<br/>
