@@ -2,13 +2,14 @@
 
 C++ Graphics Library. <br/>
 
--Unique header library.<br/>
--Quick to use.<br/>
--GDI+ and OpenGL API. <br/>
--Raw OpenGL context for 3D. <br/>
--Open Source (zlib).<br/>
--Linux and Windows.<br/>
--C++.<br/>
+Features:
+    -Unique header library.<br/>
+    -Quick to use.<br/>
+    -GDI+ and OpenGL API. <br/>
+    -Raw OpenGL context for 3D. <br/>
+    -Open Source (zlib).<br/>
+    -Linux and Windows.<br/>
+    -C++.<br/>
 
 For compile in Windows: -lopengl32 -lgdi32 -lgdiplus <br/>
 For compile in Linux:   -lX11 -lXrandr -lGL <br/>
