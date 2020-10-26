@@ -4,7 +4,7 @@ C++ Graphics Library. <br/>
 
 -Unique header library.<br/>
 -Quick to use.<br/>
--3D with raw OpenGL context. <br/>
+-Raw OpenGL context for 3D. <br/>
 -Open Source (zlib).<br/>
 -Linux and Windows.<br/>
 -C++.<br/>
