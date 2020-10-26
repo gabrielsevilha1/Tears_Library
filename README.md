@@ -3,11 +3,11 @@
 **C++ Graphics Library.** <br/>
 
 **Features:** <br/>
- *Unique header library.<br/>
- *Quick to use.<br/>
- *GDI+ and OpenGL API. <br/>
- *Raw OpenGL context for 3D. <br/>
- *Open Source (zlib).<br/>
+   *Unique header library.<br/>
+    *Quick to use.<br/>
+  *GDI+ and OpenGL API. <br/>
+*Raw OpenGL context for 3D. <br/>
+*Open Source (zlib).<br/>
  *Linux and Windows.<br/>
  *C++.<br/>
 
