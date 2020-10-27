@@ -10,6 +10,8 @@
 -Linux and Windows.<br/>
 -C++.<br/>
 
+For linux can be necessary install: libx11-dev, libxrandr-dev, libgl1-mesa-dev<br/>
+
 For compile in Windows: -lopengl32 -lgdi32 -lgdiplus <br/>
 For compile in Linux:   -lX11 -lXrandr -lGL <br/>
 
