@@ -18,9 +18,10 @@ freely, subject to the following restrictions:
 3. This notice may not be removed or altered from any source distribution.
 */
 
-//Tears Library 2.4
+//Tears Library 2.4.1
 //Created by Gabriel Sevilha ♥
 
+//Project init: 06/15/2020
 //First release: 06/24/2020
 
 //C++ library
@@ -211,12 +212,12 @@ Tears Library References:
     void setLineSize(int size);
     void fillRect(int x, int y, int w, int h);
     void fillEllipse(int x, int y, int r);
-    void fillPolygon(int point[], int points_count);
+    void fillPolygon(float* point, int points_count);
     void drawPixel(int x, int y);
     void drawRect(int x, int y, int w, int h);
     void drawEllipse(int x, int y, int r);
     void drawLine(int x, int y, int final_x, int final_y);
-    void drawPolygon(int point[], int points_count);
+    void drawPolygon(float* point, int points_count);
 
 Program exemple:
 
@@ -352,7 +353,7 @@ int main(){
     
     //Polygon
     //Specify a vertex array, with x, and y
-    int point[] = {
+    float point[] = {
     //   x   y
       400,100,
       100,500,
@@ -397,6 +398,10 @@ int main(){
 
 //Version notes (file begin)
 /*
+
+2.4.1 - 01/29/2021:
+
+  -drawPolygon() and fillPolygon(), now receive float array of vertices.
 
 2.4 - 10/24/2020:
 
@@ -9224,7 +9229,7 @@ void fillEllipse(int x, int y, int r){
 		}
 	glEnd();
 }
-void fillPolygon(int point[], int points_count){
+void fillPolygon(float* point, int points_count){
 	glBegin(GL_POLYGON);
 		for(int i = 0; i < points_count; i++){
 			glVertex2f(point[i*2],point[(i*2)+1]);
@@ -9257,7 +9262,7 @@ void drawLine(int x, int y, int final_x, int final_y){
 		glVertex2f(final_x,final_y);
 	glEnd();
 }
-void drawPolygon(int point[], int points_count){
+void drawPolygon(float* point, int points_count){
 	glBegin(GL_LINE_LOOP);
 		for(int i = 0; i < points_count; i++){
 			glVertex2f(point[i*2],point[(i*2)+1]);
@@ -10863,7 +10868,7 @@ void fillEllipse(int x, int y, int r){
 		glEnd();
 	#endif
 }
-void fillPolygon(int point[], int points_count){
+void fillPolygon(float* point, int points_count){
 	#if defined TL_USE_GDIPLUS
 		Gdiplus::Point points[points_count];
 		for(int i = 0; i < points_count; i++)
@@ -10919,7 +10924,7 @@ void drawLine(int x, int y, int final_x, int final_y){
 		glEnd();
 	#endif
 }
-void drawPolygon(int point[], int points_count){
+void drawPolygon(float* point, int points_count){
 	#if defined TL_USE_GDIPLUS
 		Gdiplus::Point points[points_count];
 		for(int i = 0; i < points_count; i++)
