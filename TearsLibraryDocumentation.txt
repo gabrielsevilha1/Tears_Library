@@ -1,4 +1,4 @@
-Tears Library 2.4
+Tears Library 2.4.1
 Created by: Gabriel Sevilha <3
 
 Project init: 06/15/2020
@@ -163,12 +163,12 @@ Tears Library References:
     void setLineSize(int size);
     void fillRect(int x, int y, int w, int h);
     void fillEllipse(int x, int y, int r);
-    void fillPolygon(int point[], int points_count);
+    void fillPolygon(float* point, int points_count);
     void drawPixel(int x, int y);
     void drawRect(int x, int y, int w, int h);
     void drawEllipse(int x, int y, int r);
     void drawLine(int x, int y, int final_x, int final_y);
-    void drawPolygon(int point[], int points_count);
+    void drawPolygon(float* point, int points_count);
 
 Program exemple:
 
@@ -304,7 +304,7 @@ int main(){
     
     //Polygon
     //Specify a vertex array, with x, and y
-    int point[] = {
+    float point[] = {
     //   x   y
       400,100,
       100,500,
